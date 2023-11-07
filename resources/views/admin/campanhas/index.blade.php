@@ -28,8 +28,8 @@
                     <th>#</th>
                     <th>Nome</th>
                     <th>Bilhete Id</th>
-                    <th>Categoria Id</th>
-                    <th>Actions</th>
+                    <th>Categoria</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -37,17 +37,14 @@
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->nome }}</td>
-                    <td>{{ $item->bilhete_id }}</td>
-                    <td>{{ $item->categoria_id }}</td>
+                    <td>{{ $item->bilhete->quantidade }}</td>
+                    <td>{{ $item->categoria->nome }}</td>
                     <td>
-                        <a href="{{ url('/admin/campanhas/' . $item->id) }}" title="View Campanha"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                        <a href="{{ url('/admin/campanhas/' . $item->id . '/edit') }}" title="Edit Campanha"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
-
-                        <form method="POST" action="{{ url('/admin/campanhas' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                            {{ method_field('DELETE') }}
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger btn-xs" title="Delete Campanha" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                        </form>
+                        <div class="btn-group float-end" role="group" aria-label="">
+                            <a href="{{ route('admin.campanhas.show', ['id'=>$item->id]) }}" type="button" class="ri btn btn-outline-success btn-sm"><svg class="bi"><use xlink:href="#icon_mostrar"/></svg> MOSTRAR</a>
+                            <a href="{{ route('admin.campanhas.edit', ['id'=>$item->id]) }}" type="button" class="ri btn btn-outline-primary btn-sm"><svg class="bi"><use xlink:href="#icon_editar"/></svg> EDITAR</a>
+                            <a href="{{ route('admin.campanhas.delete', ['id'=>$item->id]) }}" type="button" class="btn btn-outline-danger btn-sm"><svg class="bi"><use xlink:href="#icon_excluir"/></svg> EXCLUIR</a>
+                        </div>
                     </td>
                 </tr>
             @endforeach

@@ -14,4 +14,13 @@ class Campanha extends Model
 
     protected $primaryKey = 'id';
 
+    public function bilhete()
+    {
+        return $this->belongsTo(Bilhete::class);
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
 }

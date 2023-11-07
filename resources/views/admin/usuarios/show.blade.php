@@ -16,7 +16,7 @@
     </div>
 
     <div class="table-responsive small">
-        <h5>Incluír escola para {{ $usuario->nome }}</h5>
+
         <div class="">
 
             @include('_partials.message')
