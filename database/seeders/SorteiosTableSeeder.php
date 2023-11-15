@@ -16,7 +16,7 @@ class SorteiosTableSeeder extends Seeder
         $sorteio->nome = "Loteria federal";
         $sorteio->save();
 
-        $sorteio = new Categoria();
+        $sorteio = new Sorteio();
         $sorteio->nome = "Sorteador.com.br";
         $sorteio->save();
 

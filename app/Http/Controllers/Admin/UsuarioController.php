@@ -73,7 +73,7 @@ class UsuarioController extends Controller
 
             DB::rollBack();
 
-            return back()->with('message', 'Error: '. $e->getMessage());
+            return back()->with('message_fail', 'Error: '. $e->getMessage());
 
         }
 

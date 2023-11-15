@@ -19,16 +19,18 @@
 
         @include('_partials.message')
 
-        {{--<a href="{{ route('admin.usuarios.create') }}" type="button" class="float-end ri btn btn-outline-secondary btn-sm">
-            <svg class="bi"><use xlink:href="#icon_usuario"/></svg> NOVO USUÁRIO</a>--}}
+        <a href="{{ route('admin.campanhas.create') }}" type="button" class="float-end ri btn btn-outline-secondary btn-sm">
+                <svg class="bi"><use xlink:href="#icon_usuario"/></svg> NOVA CAMPANHA</a>
 
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Nome</th>
-                    <th>Bilhete Id</th>
+                    <th>Bilhete</th>
                     <th>Categoria</th>
+                    <th>Sorteio</th>
+                    <th>Preço</th>
                     <th></th>
                 </tr>
             </thead>
@@ -39,6 +41,8 @@
                     <td>{{ $item->nome }}</td>
                     <td>{{ $item->bilhete->quantidade }}</td>
                     <td>{{ $item->categoria->nome }}</td>
+                    <td>{{ $item->sorteio->nome }}</td>
+                    <td>{{ $item->preco }}</td>
                     <td>
                         <div class="btn-group float-end" role="group" aria-label="">
                             <a href="{{ route('admin.campanhas.show', ['id'=>$item->id]) }}" type="button" class="ri btn btn-outline-success btn-sm"><svg class="bi"><use xlink:href="#icon_mostrar"/></svg> MOSTRAR</a>

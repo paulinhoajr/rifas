@@ -127,6 +127,13 @@ if(!function_exists('dateTimeUsParaDateTimeBr')){
 	}
 }
 
+if(!function_exists('dateTimeBrParaDateTimeUs')){
+    function dateTimeBrParaDateTimeUs($date)
+    {
+        return Carbon::createFromFormat('d/m/Y H:i:s', $date)->format('Y-m-d H:i:s');
+    }
+}
+
 if(!function_exists('dateTimeUsParaBr')){
     function dateTimeUsParaBr($date)
     {

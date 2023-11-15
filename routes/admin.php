@@ -40,9 +40,14 @@ Route::group(['prefix' => '/admin', 'where'=>['id'=>'[0-9]+']], function () {
                 Route::post('/update', 'update')->name('campanhas.update');
                 Route::get('/delete/{id}', 'delete')->name('campanhas.delete');
                 Route::get('/destroy/{id}', 'destroy')->name('campanhas.destroy');
+
+                Route::post('/upload', 'upload')->name('campanhas.upload');
+                Route::get('/remove/{id}', 'remove')->name('campanhas.remove');
+                Route::get('/images/{id}', 'images')->name('campanhas.images');
+                Route::get('/list/{id}', 'list')->name('campanhas.list');
+
             });
     });
-
 
     /*Route::group(['prefix' => '/documentos'], function () {
         Route::controller(DocumentoController::class)

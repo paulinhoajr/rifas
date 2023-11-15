@@ -23,4 +23,14 @@ class Campanha extends Model
     {
         return $this->belongsTo(Categoria::class);
     }
+
+    public function sorteio()
+    {
+        return $this->belongsTo(Sorteio::class);
+    }
+
+    public function imagens()
+    {
+        return $this->hasMany(Imagem::class);
+    }
 }
