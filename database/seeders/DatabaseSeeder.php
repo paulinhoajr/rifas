@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
             SorteiosTableSeeder::class,
         ]);
 
-        \App\Models\Usuario::factory(50)->create();
-        \App\Models\Campanha::factory(100)->create();
+        /*\App\Models\Usuario::factory(50)->create();
+        \App\Models\Campanha::factory(100)->create();*/
 
     }
 }

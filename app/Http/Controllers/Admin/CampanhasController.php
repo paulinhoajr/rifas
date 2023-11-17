@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Bilhete;
 use App\Models\Campanha;
+use App\Models\CampanhaBilhete;
 use App\Models\Categoria;
 use App\Models\Imagem;
 use App\Models\Sorteio;
@@ -34,9 +35,10 @@ class CampanhasController extends Controller
         if (!empty($keyword)) {
             $campanhas = Campanha::where('nome', 'LIKE', "%$keyword%")
                 ->orWhere('descricao', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
+                ->orderByDesc('id')
+                ->paginate($perPage);
         } else {
-            $campanhas = Campanha::latest()->paginate($perPage);
+            $campanhas = Campanha::orderByDesc('id')->paginate($perPage);
         }
 
         return view('admin.campanhas.index', compact('campanhas'));
@@ -96,6 +98,15 @@ class CampanhasController extends Controller
             $campanha->situacao = $request->situacao;
             $campanha->save();
 
+            $bilhetes = $campanha->bilhete->quantidade;
+
+            for ($i=0;$i<=$bilhetes;$i++){
+                $bilhete = new CampanhaBilhete();
+                $bilhete->numero = $i;
+                $bilhete->campanha_id = $campanha->id;
+                $bilhete->save();
+            }
+
             DB::commit();
 
             return redirect()
@@ -138,7 +149,7 @@ class CampanhasController extends Controller
     {
         $this->validate($request, [
             'id' => 'required',
-            'bilhete_id' => 'required',
+            //'bilhete_id' => 'required',
             'categoria_id' => 'required',
             'sorteio_id' => 'required',
             'modelo' => 'required',
@@ -166,7 +177,7 @@ class CampanhasController extends Controller
             DB::beginTransaction();
 
             $campanha->categoria_id = $request->categoria_id;
-            $campanha->bilhete_id = $request->bilhete_id;
+            //$campanha->bilhete_id = $request->bilhete_id;
             $campanha->sorteio_id = $request->sorteio_id;
             $campanha->modelo = $request->modelo;
             $campanha->filtro = $request->filtro;
@@ -250,9 +261,15 @@ class CampanhasController extends Controller
                 $imagem_nome = $filename.'.'.$ext;
 
                 $file_name = "/images/campanhas/$imagem_nome";
+                $thumbs = "/images/campanhas/thumbs/$imagem_nome";
 
                 //Storage::disk('public_campanhas')->put($file_name , File::get($file));
                 Storage::disk('public')->put($file_name, File::get($file));
+
+                $img = Image::make(storage_path('app/public/'.$file_name));
+                $img->orientate();
+                $img->resize(366, 244);
+                $img->save(storage_path('app/public/'.$thumbs));
 
                 $imagem = new Imagem();
                 $imagem->campanha_id = $request->campanha_id;

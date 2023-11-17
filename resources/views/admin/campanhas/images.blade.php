@@ -46,13 +46,11 @@
 
     </div>
 
-    <div class="table-responsive small">
+    <div class="">
 
-        <div class="">
+        @include('_partials.message')
 
-            @include('_partials.message')
-
-            <form action="{{ route('admin.campanhas.upload') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('admin.campanhas.upload') }}" method="post" enctype="multipart/form-data">
 
                 @csrf
 
@@ -96,7 +94,6 @@
 
             </form>
 
-        </div>
         <hr class="my-4">
 
     </div>
@@ -154,7 +151,7 @@
 
                     $('.resultado').append(
                         '<div class="col-md-3">' +
-                        '<img src="/storage/images/campanhas/'+val.caminho+'" width="100%" />' +
+                        '<img src="/storage/images/campanhas/thumbs/'+val.caminho+'" width="100%" />' +
                         '<a id="'+val.id+'" class="btn btn-sm btn-default remover remover_'+val.id+'"><svg class="bi"><use xlink:href="#icon_excluir"/></svg></a>' +
                         '</div>');
 

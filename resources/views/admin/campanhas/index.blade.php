@@ -31,6 +31,7 @@
                     <th>Categoria</th>
                     <th>Sorteio</th>
                     <th>Preço</th>
+                    <th>Situação</th>
                     <th></th>
                 </tr>
             </thead>
@@ -44,8 +45,16 @@
                     <td>{{ $item->sorteio->nome }}</td>
                     <td>{{ $item->preco }}</td>
                     <td>
+                        @if($item->situacao==0)
+                            <button disabled class="btn btn-outline-danger btn-sm">Inativo</button>
+                        @else
+                            <button disabled class="btn btn-outline-success btn-sm">Ativo</button>
+                        @endif
+                    </td>
+                    <td>
                         <div class="btn-group float-end" role="group" aria-label="">
                             <a href="{{ route('admin.campanhas.show', ['id'=>$item->id]) }}" type="button" class="ri btn btn-outline-success btn-sm"><svg class="bi"><use xlink:href="#icon_mostrar"/></svg> MOSTRAR</a>
+                            <a href="{{ route('admin.campanhas.images', ['id'=>$item->id]) }}" type="button" class="ri btn btn-outline-warning btn-sm"><svg class="bi"><use xlink:href="#icon_images"/></svg> FOTOS</a>
                             <a href="{{ route('admin.campanhas.edit', ['id'=>$item->id]) }}" type="button" class="ri btn btn-outline-primary btn-sm"><svg class="bi"><use xlink:href="#icon_editar"/></svg> EDITAR</a>
                             <a href="{{ route('admin.campanhas.delete', ['id'=>$item->id]) }}" type="button" class="btn btn-outline-danger btn-sm"><svg class="bi"><use xlink:href="#icon_excluir"/></svg> EXCLUIR</a>
                         </div>

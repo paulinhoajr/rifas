@@ -6,13 +6,14 @@ use App\Http\Controllers\UsuarioController;
 
 Route::controller(HomeController::class)
     ->name('site.')
-    ->middleware(['auth', 'verified'])
+    //->middleware(['auth', 'verified'])
     ->group(function () {
         Route::get('/', function() {
             return redirect('/home');
         });
 
         Route::get('/home', 'index')->name('index');
+        Route::get('/campanha/{id}/{nome}', 'campanha')->name('campanha');
 
     });
 

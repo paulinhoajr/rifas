@@ -19,6 +19,11 @@ class Campanha extends Model
         return $this->belongsTo(Bilhete::class);
     }
 
+    public function bilhetes()
+    {
+        return $this->hasMany(CampanhaBilhete::class);
+    }
+
     public function categoria()
     {
         return $this->belongsTo(Categoria::class);

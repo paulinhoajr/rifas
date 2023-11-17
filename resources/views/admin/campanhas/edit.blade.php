@@ -34,7 +34,7 @@
 
                 <div class="col-sm-4">
                     <label for="bilhete_id" class="form-label">Bilhetes</label>
-                    <select class="form-select" id="bilhete_id" name="bilhete_id">
+                    <select class="form-select" id="bilhete_id" name="bilhete_id" disabled>
                         @foreach($bilhetes as $bilhete)
                             <option {{ $campanha->bilhete_id == $bilhete->id ? "selected" : "" }} value="{{ $bilhete->id }}">{{ $bilhete->quantidade }}</option>
                         @endforeach
