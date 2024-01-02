@@ -21,7 +21,6 @@
 
             @include('_partials.message')
 
-
         </div>
         <hr class="my-4">
 

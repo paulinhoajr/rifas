@@ -14,7 +14,7 @@
     <body>
         @include('_partials.icons')
 
-        <div class="container-fluid">
+        <div class="container">
         @include('site._partials.header')
 
         <main style="bottom: 0;">
