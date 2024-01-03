@@ -9,7 +9,7 @@ return new class extends Migration
     {
         Schema::create('imagens', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('campanha_id');
+            $table->foreignId('premio_id');
             $table->string('nome')->nullable();
             $table->string('caminho');
             $table->integer('ordem')->nullable();

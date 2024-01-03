@@ -54,7 +54,6 @@
                     <td>
                         <div class="btn-group float-end" role="group" aria-label="">
                             <a href="{{ route('admin.campanhas.show', ['id'=>$item->id]) }}" type="button" class="ri btn btn-outline-success btn-sm"><svg class="bi"><use xlink:href="#icon_mostrar"/></svg> MOSTRAR</a>
-                            <a href="{{ route('admin.campanhas.images', ['id'=>$item->id]) }}" type="button" class="ri btn btn-outline-warning btn-sm"><svg class="bi"><use xlink:href="#icon_images"/></svg> FOTOS</a>
                             <a href="{{ route('admin.campanhas.edit', ['id'=>$item->id]) }}" type="button" class="ri btn btn-outline-primary btn-sm"><svg class="bi"><use xlink:href="#icon_editar"/></svg> EDITAR</a>
                             <a href="{{ route('admin.campanhas.delete', ['id'=>$item->id]) }}" type="button" class="btn btn-outline-danger btn-sm"><svg class="bi"><use xlink:href="#icon_excluir"/></svg> EXCLUIR</a>
                         </div>

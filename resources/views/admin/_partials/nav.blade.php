@@ -24,6 +24,18 @@
             Campanhas
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.premios.index') }}">
+            <svg class="bi"><use xlink:href="#icon_usuarios"/></svg>
+            Prêmios
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.promocoes.index') }}">
+            <svg class="bi"><use xlink:href="#icon_usuarios"/></svg>
+            Promoções
+        </a>
+    </li>
 
 </ul>
 

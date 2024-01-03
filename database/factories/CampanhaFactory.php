@@ -12,7 +12,7 @@ class CampanhaFactory extends Factory
     {
         return [
             'categoria_id' => rand(1, 4),
-            'bilhete_id' => rand(1, 22),
+            'bilhete_id' => 4,
             'sorteio_id' => rand(1, 2),
             'nome' => fake()->name(),
             'preco' => rand(3, 30),

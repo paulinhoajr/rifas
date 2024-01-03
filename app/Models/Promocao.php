@@ -10,4 +10,9 @@ class Promocao extends Model
 
     protected $primaryKey = 'id';
 
+    public function campanha()
+    {
+        return $this->belongsTo(Campanha::class);
+    }
+
 }

@@ -15,30 +15,33 @@
 
             @include('_partials.message')
 
-            <div class="col-md-6">
+            @foreach($campanha->premios as $premio)
+            <div class="col-md-3">
 
-                <h2 class="mt-5">Fotos</h2>
+                {{--<h2 class="mt-5">Fotos</h2>--}}
 
-                <div id="carouselCampanha" class="carousel slide">
+                <h3>{{ $premio->nome }}</h3>
+                <div id="carouselCampanha{{ $premio->id }}" class="carousel slide">
                     <div class="carousel-inner">
-                        @foreach($campanha->imagens as $imagem)
-                            <div class="carousel-item {{$loop->first ? "active" : ""}}">
-                                <img src="/storage/images/campanhas/{{ $imagem->caminho }}" class="d-block w-100" alt="{{ $campanha->nome }}">
-                            </div>
-                        @endforeach
+                            @foreach($premio->imagens as $imagem)
+                                <div class="carousel-item {{$loop->first ? "active" : ""}}">
+                                    <img src="/storage/images/premios/{{ $imagem->caminho }}" class="d-block w-100" alt="{{ $campanha->nome }}">
+                                </div>
+                            @endforeach
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCampanha" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCampanha{{ $premio->id }}" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselCampanha" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselCampanha{{ $premio->id }}" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
 
             </div>
-            <div class="col-md-6">
+            @endforeach
+            <div class="col-md-12">
 
                 <h2 class="mt-5">Sobre</h2>
 

@@ -1,40 +1,41 @@
-@extends('layouts.backend')
+@extends('admin.layouts.admin')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            @include('admin.sidebar')
-
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="card-header">Promoco {{ $promoco->id }}</div>
-                    <div class="card-body">
-
-                        <a href="{{ url('/admin/promocoes') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/admin/promocoes/' . $promoco->id . '/edit') }}" title="Edit Promoco"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
-                        <form method="POST" action="{{ url('admin/promocoes' . '/' . $promoco->id) }}" accept-charset="UTF-8" style="display:inline">
-                            {{ method_field('DELETE') }}
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger btn-sm" title="Delete Promoco" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                        </form>
-                        <br/>
-                        <br/>
-
-                        <div class="table-responsive">
-                            <table class="table table">
-                                <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $promoco->id }}</td>
-                                    </tr>
-                                    <tr><th> Campanha Id </th><td> {{ $promoco->campanha_id }} </td></tr><tr><th> Quantidade </th><td> {{ $promoco->quantidade }} </td></tr><tr><th> Valor </th><td> {{ $promoco->valor }} </td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dados de {{ $promocao->nome }}</h1>
+        {{--<div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
             </div>
-        </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+                <svg class="bi"><use xlink:href="#calendar3"/></svg>
+                This week
+            </button>
+        </div>--}}
     </div>
+
+    <div class="table-responsive small">
+
+        <div class="">
+
+            @include('_partials.message')
+
+        </div>
+        <hr class="my-4">
+
+    </div>
+@endsection
+
+@section('scripts')
+
+    <script>
+        $(function() {
+
+        });
+
+        /*$("#cpf").mask("999.999.999-99");*/
+
+    </script>
+
 @endsection

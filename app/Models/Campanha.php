@@ -24,6 +24,11 @@ class Campanha extends Model
         return $this->hasMany(CampanhaBilhete::class);
     }
 
+    public function premios()
+    {
+        return $this->hasMany(Premio::class);
+    }
+
     public function categoria()
     {
         return $this->belongsTo(Categoria::class);
@@ -34,8 +39,5 @@ class Campanha extends Model
         return $this->belongsTo(Sorteio::class);
     }
 
-    public function imagens()
-    {
-        return $this->hasMany(Imagem::class);
-    }
+
 }

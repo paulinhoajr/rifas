@@ -1,36 +1,71 @@
-@extends('layouts.backend')
+@extends('admin.layouts.admin')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            @include('admin.sidebar')
-
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="card-header">Create New Promoco</div>
-                    <div class="card-body">
-                        <a href="{{ url('/admin/promocoes') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br />
-
-                        @if ($errors->any())
-                            <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
-
-                        <form method="POST" action="{{ url('/admin/promocoes') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-
-                            @include ('admin.promocoes.form', ['formMode' => 'create'])
-
-                        </form>
-
-                    </div>
-                </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Novo Prêmio</h1>
+        {{--<div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
             </div>
-        </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+                <svg class="bi"><use xlink:href="#calendar3"/></svg>
+                This week
+            </button>
+        </div>--}}
     </div>
+    <div class="">
+
+        @include('_partials.message')
+
+        <form action="{{ route('admin.promocoes.store') }}" method="post">
+
+            @csrf
+
+            <div class="row g-3">
+
+                <div class="col-sm-4">
+                    <label for="campanha_id" class="form-label">Campanhas</label>
+                    <select class="form-select" id="campanha_id" name="campanha_id">
+                        @foreach($campanhas as $campanha)
+                            <option {{ old('campanha_id') == $campanha->id ? "selected" : "" }} value="{{ $campanha->id }}">#{{ $campanha->id }} {{ $campanha->nome }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="quantidade" class="form-label">QTD de números</label>
+                    <input type="text" class="form-control" id="quantidade" name="quantidade" placeholder="Nome" value="{{ old('quantidade') }}" required>
+                </div>
+
+                {{--<hr class="my-4">--}}
+                <div class="col-sm-12">
+                    <label for="valor" class="form-label">Valor</label>
+                    <input type="text" class="form-control" id="valor" name="valor" placeholder="Valor" value="{{ old('valor') }}" required>
+                </div>
+
+            </div>
+
+            <hr class="my-4">
+
+            <button class="float-end btn btn-primary" type="submit">Criar Prêmio</button>
+        </form>
+    </div>
+@endsection
+
+@section('scripts')
+
+    <script>
+
+        /*$("#cpf").mask("999.999.999-99");
+        $('#whatsapp').mask('(99) 9 9999-9999');
+        $("#data").mask("99/99/9999 99:99:99");*/
+
+        jQuery('#valor').keyup(function () {
+            this.value = this.value.replace(/(?!^-)[^0-9]/g, "");
+        });
+
+
+    </script>
+
 @endsection

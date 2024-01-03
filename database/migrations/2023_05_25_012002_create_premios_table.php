@@ -11,6 +11,7 @@ return new class extends Migration
             $table->increments('id');
             $table->foreignId('campanha_id');
             $table->string('nome');
+            $table->longText('descricao');
             $table->timestamps();
             });
     }

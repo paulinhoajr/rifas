@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Admin\CampanhasController;
+use App\Http\Controllers\Admin\PremiosController;
+use App\Http\Controllers\Admin\PromocoesController;
 
 Route::group(['prefix' => '/admin', 'where'=>['id'=>'[0-9]+']], function () {
 
@@ -41,10 +43,47 @@ Route::group(['prefix' => '/admin', 'where'=>['id'=>'[0-9]+']], function () {
                 Route::get('/delete/{id}', 'delete')->name('campanhas.delete');
                 Route::get('/destroy/{id}', 'destroy')->name('campanhas.destroy');
 
-                Route::post('/upload', 'upload')->name('campanhas.upload');
+                /*Route::post('/upload', 'upload')->name('campanhas.upload');
                 Route::get('/remove/{id}', 'remove')->name('campanhas.remove');
                 Route::get('/images/{id}', 'images')->name('campanhas.images');
-                Route::get('/list/{id}', 'list')->name('campanhas.list');
+                Route::get('/list/{id}', 'list')->name('campanhas.list');*/
+
+            });
+    });
+
+    Route::group(['prefix' => '/premios'], function () {
+        Route::controller(PremiosController::class)
+            ->name('admin.')
+            ->group(function () {
+                Route::get('/', 'index')->name('premios.index');
+                Route::get('/create', 'create')->name('premios.create');
+                Route::post('/store', 'store')->name('premios.store');
+                Route::get('/show/{id}', 'show')->name('premios.show');
+                Route::get('/edit/{id}', 'edit')->name('premios.edit');
+                Route::post('/update', 'update')->name('premios.update');
+                Route::get('/delete/{id}', 'delete')->name('premios.delete');
+                Route::get('/destroy/{id}', 'destroy')->name('premios.destroy');
+
+                Route::post('/upload', 'upload')->name('premios.upload');
+                Route::get('/remove/{id}', 'remove')->name('premios.remove');
+                Route::get('/images/{id}', 'images')->name('premios.images');
+                Route::get('/list/{id}', 'list')->name('premios.list');
+
+            });
+    });
+
+    Route::group(['prefix' => '/promocoes'], function () {
+        Route::controller(PromocoesController::class)
+            ->name('admin.')
+            ->group(function () {
+                Route::get('/', 'index')->name('promocoes.index');
+                Route::get('/create', 'create')->name('promocoes.create');
+                Route::post('/store', 'store')->name('promocoes.store');
+                Route::get('/show/{id}', 'show')->name('promocoes.show');
+                Route::get('/edit/{id}', 'edit')->name('promocoes.edit');
+                Route::post('/update', 'update')->name('promocoes.update');
+                Route::get('/delete/{id}', 'delete')->name('promocoes.delete');
+                Route::get('/destroy/{id}', 'destroy')->name('promocoes.destroy');
 
             });
     });

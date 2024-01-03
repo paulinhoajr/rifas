@@ -237,72 +237,7 @@ class CampanhasController extends Controller
 
     }
 
-    public function images($id){
 
-        $campanha = Campanha::findOrFail($id);
-
-        return view('admin.campanhas.images', compact('campanha'));
-
-    }
-
-    public function upload(Request $request)
-    {
-
-        if ($request->hasFile('images')) {
-
-            $files = $request->file('images');
-
-            foreach($files as $file) {
-
-                $ext = strtolower($file->getClientOriginalExtension());
-
-                $filename = uniqid();
-
-                $imagem_nome = $filename.'.'.$ext;
-
-                $file_name = "/images/campanhas/$imagem_nome";
-                $thumbs = "/images/campanhas/thumbs/$imagem_nome";
-
-                //Storage::disk('public_campanhas')->put($file_name , File::get($file));
-                Storage::disk('public')->put($file_name, File::get($file));
-
-                $img = Image::make(storage_path('app/public/'.$file_name));
-                $img->orientate();
-                $img->resize(366, 244);
-                $img->save(storage_path('app/public/'.$thumbs));
-
-                $imagem = new Imagem();
-                $imagem->campanha_id = $request->campanha_id;
-                $imagem->caminho     = $imagem_nome;
-                $imagem->situacao     = 1;
-                $imagem->save();
-
-            }
-        }
-    }
-
-    public function list($id){
-
-        $campanha = Campanha::findOrFail($id);
-
-        return json_encode($campanha->imagens);
-
-    }
-
-    public function remove($id)
-    {
-        $image = Imagem::find($id);
-
-        Storage::disk('public')->delete('/images/campanhas/thumbs/'.$image->caminho);
-        Storage::disk('public')->delete('/images/campanhas/'.$image->caminho);
-
-        if($image->delete()){
-            return "success";
-        }
-
-        return "error";
-
-    }
 
 
 }
