@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Campanha;
-use App\Models\Certificado;
 
 class HomeController extends Controller
 {
@@ -30,5 +29,7 @@ class HomeController extends Controller
             'campanha' => $campanha
         ]);
     }
+
+
 
 }

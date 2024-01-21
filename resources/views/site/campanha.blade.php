@@ -9,43 +9,45 @@
 @section('content')
 
     <div class="container">
-        <div class="row mb-5">
+        <div class="row mb-3">
 
-            <h2 class="mt-5">Campanha {{ $campanha->nome }}</h2>
+            <h2 class="mt-3">Campanha {{ $campanha->nome }}</h2>
 
             @include('_partials.message')
 
-            @foreach($campanha->premios as $premio)
-            <div class="col-md-3">
-
-                {{--<h2 class="mt-5">Fotos</h2>--}}
-
-                <h3>{{ $premio->nome }}</h3>
-                <div id="carouselCampanha{{ $premio->id }}" class="carousel slide">
-                    <div class="carousel-inner">
-                            @foreach($premio->imagens as $imagem)
-                                <div class="carousel-item {{$loop->first ? "active" : ""}}">
-                                    <img src="/storage/images/premios/{{ $imagem->caminho }}" class="d-block w-100" alt="{{ $campanha->nome }}">
-                                </div>
-                            @endforeach
+            <div class="col-md-8">
+                <div class="row mb-3">
+                    @foreach($campanha->premios as $premio)
+                    <div class="col-sm-6">
+                        {{--<h2 class="mt-5">Fotos</h2>--}}
+                        <h3>{{ $premio->nome }}</h3>
+                        <div id="carouselCampanha{{ $premio->id }}" class="carousel slide">
+                            <div class="carousel-inner">
+                                    @foreach($premio->imagens as $imagem)
+                                        <div class="carousel-item {{$loop->first ? "active" : ""}}">
+                                            <img src="/storage/images/premios/{{ $imagem->caminho }}" class="d-block " width="100%" alt="{{ $campanha->nome }}">
+                                        </div>
+                                    @endforeach
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselCampanha{{ $premio->id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselCampanha{{ $premio->id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCampanha{{ $premio->id }}" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselCampanha{{ $premio->id }}" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                    @endforeach
                 </div>
-
             </div>
-            @endforeach
-            <div class="col-md-12">
 
-                <h2 class="mt-5">Sobre</h2>
+            <div class="col-md-4">
 
-                bla bla
+                <h2 class="mt-5">Descrição</h2>
+
+                {!! $campanha->descricao !!}
 
             </div>
         </div>
@@ -54,18 +56,29 @@
     <div class="container">
         <div class="row">
 
-            <h2 class="mt-5">Números</h2>
+            <h2 class="mt-3">Números</h2>
             @php
                 $total = strlen($campanha->bilhete->quantidade);
             @endphp
 
-            <div class="col-md-12 mb-2 text-center">
-            @foreach($campanha->bilhetes as $bilhete)
-                <button {{--{{ $bilhete->situacao > 0 ? "" : "" }}--}} id="{{ $bilhete->id }}" class="btn mb-2 mr-2 numeros {{ $bilhete->situacao==1 ? "btn-warning reservado" : ($bilhete->situacao==2 ? "btn-success escolhido" : "btn-outline-info") }}">{{ mb_str_pad($bilhete->numero, $total, '0', STR_PAD_LEFT) }}</button>
-            @endforeach
-            </div>
+            <form id="form" name="form" action="{{ route('site.pagamentos.pagar') }}" method="post" onSubmit="document.getElementById('avancar').disabled=true;">
 
+                @csrf
+
+                <input type="hidden" name="id" value="{{ $campanha->id }}">
+
+                <div class="col-md-12 mb-2 text-center">
+                @foreach($campanha->bilhetes as $bilhete)
+                    <a {{--{{ $bilhete->situacao > 0 ? "" : "" }}--}} id="{{ $bilhete->id }}" class="btn mb-2 mr-2 numeros {{ $bilhete->situacao==1 ? "btn-warning reservado" : ($bilhete->situacao==2 ? "btn-success escolhido" : "btn-outline-info") }}">{{ mb_str_pad($bilhete->numero, $total, '0', STR_PAD_LEFT) }}</a>
+                @endforeach
+                </div>
+
+                <div class="col-md-12 mb-2">
+                    <button class="btn btn-success btn-lg" id="avancar">Avançar</button>
+                </div>
+            </form>
         </div>
+
     </div>
 
 @endsection
@@ -79,6 +92,16 @@
 
         $(function() {
 
+            /*$( "#avancar" ).on( "click", function() {
+
+                $(".selecionado").each(function() {
+                    alert(this.id);
+
+
+                });
+
+            });*/
+
             $( ".numeros" ).on( "click", function() {
 
                 let id = this.id;
@@ -88,6 +111,8 @@
                     $("#" + id).removeClass("selecionado");
                     $("#" + id).removeClass("btn-primary");
                     $("#" + id).addClass("btn-outline-info");
+
+                    $( "#num_"+id ).remove();
 
                 }else if ($("#"+id).hasClass("escolhido")){
 
@@ -105,8 +130,18 @@
                     $("#"+id).addClass( "selecionado" );
                     $("#"+id).addClass( "btn-primary" );
 
+                    $('<input>', {
+                        type: 'hidden',
+                        id: "num_"+id,
+                        name: 'numeros[]',
+                        value: id
+                    }).appendTo('form');
+
                 }
             } );
+
+
+
         });
 
         function mostraMensagem(mensagem, tipo, tempo = 5000){

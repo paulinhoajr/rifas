@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\PagamentoController;
 
 Route::controller(HomeController::class)
     ->name('site.')
@@ -38,5 +39,19 @@ Route::group(['prefix' => '/usuarios', 'where'=>['id'=>'[0-9]+']], function () {
             Route::post('/store', 'store')->name('store');
 
         });
+
+});
+
+Route::group(['prefix' => '/pagamentos', 'where'=>['id'=>'[0-9]+']], function () {
+
+    Route::controller(PagamentoController::class)
+        ->middleware(['auth', 'verified'])
+        ->name('site.pagamentos.')
+        ->group(function () {
+
+            Route::post('/pagar', 'pagar')->name('pagar');
+
+        });
+
 
 });
