@@ -8,6 +8,7 @@ npm run build
 php artisan storage:link
 php artisan queue:work
 
+
 sudo supervisorctl restart all
 git push voopeclubes master
 
