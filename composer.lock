@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b641a42b93cb4a3a650e3d21418a1df8",
+    "content-hash": "582d675dc4abfb6902cb39d32ccc508f",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3029,6 +3029,47 @@
                 }
             ],
             "time": "2023-02-08T01:06:31+00:00"
+        },
+        {
+            "name": "paulinhoajr/api-pix-sicredi",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paulinhoajr/api-pix-sicredi.git",
+                "reference": "a4cea7ccccabd3508318939a4a3541305ce67147"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paulinhoajr/api-pix-sicredi/zipball/a4cea7ccccabd3508318939a4a3541305ce67147",
+                "reference": "a4cea7ccccabd3508318939a4a3541305ce67147",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Paulinhoajr\\Api-Pix-Sicredi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paulo Rodrigues",
+                    "email": "paulinhoajrodrigues@gmail.com"
+                },
+                {
+                    "name": "Paulo Junior",
+                    "email": "pejotinhas@gmail.com"
+                }
+            ],
+            "description": "Modulo de pagamentos pix sicredi",
+            "support": {
+                "issues": "https://github.com/paulinhoajr/api-pix-sicredi/issues",
+                "source": "https://github.com/paulinhoajr/api-pix-sicredi/tree/v1.0"
+            },
+            "time": "2024-06-28T19:09:36+00:00"
         },
         {
             "name": "phenx/php-font-lib",
@@ -9198,5 +9239,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

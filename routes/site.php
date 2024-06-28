@@ -14,6 +14,7 @@ Route::controller(HomeController::class)
         });
 
         Route::get('/home', 'index')->name('index');
+        Route::get('/teste', 'teste')->name('teste');
         Route::get('/campanha/{id}/{nome}', 'campanha')->name('campanha');
 
     });
