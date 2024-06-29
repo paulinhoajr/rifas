@@ -70,7 +70,7 @@ class PagamentoController extends Controller
 
                 $bilhete->situacao = 1;
                 $bilhete->usuario_id = Auth::user()->id;
-                $bilhete->expira = Carbon::now()->addHours(25);
+                $bilhete->expira = Carbon::now()->addHours(24);
                 $bilhete->save();
 
             }
@@ -118,45 +118,38 @@ class PagamentoController extends Controller
             $token = $sicredi->conecta();
 
             $pix = new PixSicredi(null, $token);
-            //asdfasdfasdfasdfasdfsadfasdfas
-
-            /*$resposta = $pix->dadosDeCobranca("90d5dc07105d4d5a824ef63c7f51e9aa");
-            dd($resposta);*/
-
-            //$pix->updateWebhook('sua-url', 'sua-chave-pix');
 
             $txid = md5(uniqid());
 
             if (!preg_match('/^[a-zA-Z0-9]{26,35}$/', $txid)) {
-                throw new \Exception('txid inválido, deve ser alfanumérico entre 26 e 35 caracteres');
+            throw new \Exception('txid inválido, deve ser alfanumérico entre 26 e 35 caracteres');
             }
 
             $usuario = Usuario::where('id', Auth::user()->id)->first();
 
             $cobranca  = [
-              "calendario" => [
-                  //"dataDeVencimento" => "2040-04-01",
-                  //"validadeAposVencimento" => 1
-                  "expiracao" => 86401
-              ],
-              "devedor" => [
-                  "cpf" => $usuario->cpf,
-                  "nome" => $usuario->nome
-              ],
-              "valor" => [
-                  "original" => any_to_dollar($request->valor),
-                  "modalidadeAlteracao" => 1
-              ],
-              "chave" => config('app.sicredi_pix'),
-              "solicitacaoPagador" => config('app.sicredi_pix_descricao')
-              /*"infoAdicionais" => [
+                "calendario" => [
+                    //"dataDeVencimento" => "2040-04-01",
+                    //"validadeAposVencimento" => 1
+                    "expiracao" => 86401
+                ],
+                "devedor" => [
+                    "cpf" => $usuario->cpf,
+                    "nome" => $usuario->nome
+                ],
+                "valor" => [
+                    "original" => any_to_dollar($request->valor),
+                    "modalidadeAlteracao" => 1
+                ],
+                "chave" => config('app.sicredi_pix'),
+                "solicitacaoPagador" => config('app.sicredi_pix_descricao')
+                /*"infoAdicionais" => [
                   [
                       "nome" => "teste",
                       "valor" => "teste"
                   ]
-              ]*/
-          ];
-
+                ]*/
+            ];
 
             try {
 
@@ -182,16 +175,16 @@ class PagamentoController extends Controller
                 $pix->save();
 
                 foreach ($numeros as $numero){
-                    $bilhete = CampanhaBilhete::where('id', $numero)
-                        ->first();
+                $bilhete = CampanhaBilhete::where('id', $numero)
+                ->first();
 
-                    $bilhete->expira = Carbon::now()->addHours(24);
-                    $bilhete->save();
-                }
+                $bilhete->expira = Carbon::now()->addHours(24);
+                $bilhete->save();
+            }
 
-                DB::commit();
+            DB::commit();
 
-                return redirect()->route('site.usuarios.campanhas')->with('message', "Chave PIX gerada com sucesso");
+            return redirect()->route('site.usuarios.campanhas')->with('message', "Chave PIX gerada com sucesso");
 
             } catch (\Exception $e) {
                 DB::rollBack();
@@ -319,7 +312,15 @@ class PagamentoController extends Controller
     public function imprimirPix($pix_id)
     {
 
-        $pix = Pix::findOrFail($pix_id);
+        $pix = Pix::where('id', $pix_id)
+            ->where('usuario_id', Auth::user()->id)
+            ->where('situacao', 0)
+            ->first();
+
+        if (!$pix){
+            return redirect()->route('site.usuarios.campanhas')
+                ->with('message_alert', "Essa cobrança já foi paga ou cancelada!");
+        }
 
         return view("site.pagamentos.pix", [
             'chave' => $pix->chave,

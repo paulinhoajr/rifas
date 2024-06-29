@@ -31,13 +31,17 @@ class UsuarioController extends Controller
             ->pluck('campanha_id');
 
         $campanhas = Campanha::whereIn('id', $bilhetes)->get();
+
         $campanhas->each(function ($campanha) {
             $campanha->total = strlen($campanha->bilhete->quantidade);
             $campanha->bilhetes = $campanha->bilhetes->where('campanha_id', $campanha->id)->where('usuario_id', Auth::user()->id);
             $campanha->abertos = $campanha->bilhetes->where('situacao', 1);
             $campanha->abertosTotal = $campanha->abertos->count();
+
             if ($campanha->pix){
-                $campanha->pix_aberto = $campanha->pix->where('situacao', 0)->first();
+                $campanha->pix_aberto = $campanha->pix
+                    ->where('campanha_id', $campanha->id)
+                    ->where('situacao', 0)->first();
             }
 
         });

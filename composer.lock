@@ -3151,16 +3151,16 @@
         },
         {
             "name": "paulinhoajr/api-pix-sicredi",
-            "version": "v1.3.8",
+            "version": "v1.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paulinhoajr/api-pix-sicredi.git",
-                "reference": "77c115c6ba9920322454419a8559614e8d7437fe"
+                "reference": "ce8b8bc14ff17fce25995de8b289c43a5bb89a30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paulinhoajr/api-pix-sicredi/zipball/77c115c6ba9920322454419a8559614e8d7437fe",
-                "reference": "77c115c6ba9920322454419a8559614e8d7437fe",
+                "url": "https://api.github.com/repos/paulinhoajr/api-pix-sicredi/zipball/ce8b8bc14ff17fce25995de8b289c43a5bb89a30",
+                "reference": "ce8b8bc14ff17fce25995de8b289c43a5bb89a30",
                 "shasum": ""
             },
             "type": "library",
@@ -3186,9 +3186,9 @@
             "description": "Api de integração com o Pix Cobrança do Banco Sicredi",
             "support": {
                 "issues": "https://github.com/paulinhoajr/api-pix-sicredi/issues",
-                "source": "https://github.com/paulinhoajr/api-pix-sicredi/tree/v1.3.8"
+                "source": "https://github.com/paulinhoajr/api-pix-sicredi/tree/v1.3.9"
             },
-            "time": "2024-06-29T18:28:28+00:00"
+            "time": "2024-06-29T20:39:49+00:00"
         },
         {
             "name": "paulinhoajr/cielo",

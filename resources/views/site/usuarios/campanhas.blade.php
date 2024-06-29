@@ -44,21 +44,21 @@
                                         </div>
                                     </td>
                                     <td>
-                                        
-                                            @if($campanha->pix_aberto!=null)
-                                            <a href="{{route('site.pagamentos.imprimirPix', ['pix_id'=>$campanha->pix->id])}}"
-                                               class="btn btn-outline-danger btn-sm">
-                                                <i class="fa fa-money fa-lg" aria-hidden="true"></i>
-                                                COPIA E COLA / QRCODE - PIX
-                                            </a>
-                                            @else
+                                        @if($campanha->pix_aberto!=null)
+                                        <a href="{{route('site.pagamentos.imprimirPix', ['pix_id'=>$campanha->pix_aberto->id])}}"
+                                           class="btn btn-outline-danger btn-sm">
+                                            <i class="fa fa-money fa-lg" aria-hidden="true"></i>
+                                            COPIA E COLA / QRCODE - PIX
+                                        </a>
+                                        @else
+                                            @if($campanha->abertosTotal > 0)
                                                 @if($campanha->promocao and ($campanha->abertosTotal >= $campanha->promocao->quantidade))
                                                     <a href="{{ route('site.pagamentos.pagar_selecionar', ['id'=>$campanha->id]) }}" class="btn btn-primary btn-sm">Pagar R$ {{ dollar_to_real($campanha->abertosTotal * $campanha->promocao->valor) }}</a>
                                                 @else
                                                     <a href="{{ route('site.pagamentos.pagar_selecionar', ['id'=>$campanha->id]) }}" class="btn btn-primary btn-sm">Pagar R$ {{ dollar_to_real($campanha->abertosTotal * $campanha->preco) }}</a>
                                                 @endif
                                             @endif
-
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

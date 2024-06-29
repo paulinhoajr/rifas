@@ -51,17 +51,36 @@ class HomeController extends Controller
             $resposta = $pixSicredi->dadosDeCobranca($pix->txid);
 
             if ($resposta['status'] == "CONCLUIDA"){
-                $pix->situacao = 1;
-                $pix->save();
 
-                $bilhetes = CampanhaBilhete::whereIn('id', json_decode($pix->lista))
-                    ->where('situacao', 1)
-                    ->whereNotNull('expira')
-                    ->get();
+                try {
 
-                foreach ($bilhetes as $bilhete) {
+                    DB::beginTransaction();
+
+                    $pix->situacao = 1;
+                    $pix->save();
+
+                    $bilhetes = CampanhaBilhete::whereIn('id', json_decode($pix->lista))
+                        ->where('situacao', 1)
+                        ->where('usuario_id', $pix->usuario_id)
+                        ->whereNotNull('expira')
+                        ->get();
+
+                    foreach ($bilhetes as $bilhete) {
+                        $bilhete->situacao = 2;
+                        $bilhete->expira = null;
+                        $bilhete->save();
+                    }
+
+                    DB::commit();
+
+                }catch (\Exception $e){
+
+                    DB::rollBack();
+                    dd($e->getMessage());
 
                 }
+
+
             }
         }
     }
@@ -195,16 +214,16 @@ class HomeController extends Controller
 
             DB::beginTransaction();
 
-            foreach ($bilhetes as $bilhete){
+            foreach ($bilhetes as $bilhete) {
 
                 $pix = Pix::where('situacao', 0)
                     ->whereJsonContains('lista', $bilhete->id)
                     ->where('campanha_id', $bilhete->campanha_id)
                     ->first();
 
-                if ($pix){
-                    continue;
-                }
+                /*if ($pix) {
+                    break;
+                }*/
 
                 $date1 = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::parse($bilhete->expira));
                 $date2 = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now());
@@ -212,12 +231,16 @@ class HomeController extends Controller
                 $result = $date2->gt($date1);
 
                 if ($result){
+
                     //rodar itens e cancelar numeros
                     //dd("teste");
                     $bilhete->usuario_id = null;
                     $bilhete->expira = null;
                     $bilhete->situacao = 0;
                     $bilhete->save();
+
+                    $pix->situacao = 2;
+                    $pix->save();
                 }
             }
 
