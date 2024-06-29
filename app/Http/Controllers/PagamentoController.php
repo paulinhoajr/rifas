@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Classes\Sicredi\SicrediConecta;
 use App\Http\Requests\Site\PagarPixStoreRequest;
 use App\Http\Requests\Site\PagarStoreRequest;
 use App\Http\Requests\Site\UsuarioStoreRequest;
@@ -12,11 +13,13 @@ use App\Models\CampanhaBilhete;
 use App\Models\Pix;
 use App\Models\Usuario;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Paulinhoajr\ApiPixSicredi\PixSicredi;
 use Paulinhoajr\Cielo\Ecommerce\CieloEcommerce;
 use Paulinhoajr\Cielo\Ecommerce\Environment;
 use Paulinhoajr\Cielo\Ecommerce\Request\CieloRequestException;
@@ -105,6 +108,100 @@ class PagamentoController extends Controller
 
         try {
 
+            $sicredi = new SicrediConecta();
+
+            $token = $sicredi->conecta();
+
+            $pix = new PixSicredi(null, $token);
+            //asdfasdfasdfasdfasdfsadfasdfas
+
+            /*$resposta = $pix->dadosDeCobranca("90d5dc07105d4d5a824ef63c7f51e9aa");
+            dd($resposta);*/
+
+            //$pix->updateWebhook('sua-url', 'sua-chave-pix');
+
+            $txid = md5(uniqid());
+
+            if (!preg_match('/^[a-zA-Z0-9]{26,35}$/', $txid)) {
+                throw new \Exception('txid inválido, deve ser alfanumérico entre 26 e 35 caracteres');
+            }
+
+            $usuario = Usuario::where('id', Auth::user()->id)->first();
+
+            $cobranca  = [
+              "calendario" => [
+                  //"dataDeVencimento" => "2040-04-01",
+                  //"validadeAposVencimento" => 1
+                  "expiracao" => 86401
+              ],
+              "devedor" => [
+                  "cpf" => $usuario->cpf,
+                  "nome" => $usuario->nome
+              ],
+              "valor" => [
+                  "original" => any_to_dollar($request->valor),
+                  "modalidadeAlteracao" => 1
+              ],
+              "chave" => config('app.sicredi_pix'),
+              "solicitacaoPagador" => config('app.sicredi_pix_descricao')
+              /*"infoAdicionais" => [
+                  [
+                      "nome" => "teste",
+                      "valor" => "teste"
+                  ]
+              ]*/
+          ];
+
+
+            try {
+
+                $resposta = $pix->criarCobranca($cobranca, null);
+
+                $linhas = round(strlen($resposta['pixCopiaECola']) / 120) + 1;
+
+                $numeros = $request->numeros;
+                $numeros = array_map('intval', $numeros);
+
+                DB::beginTransaction();
+
+                $pix = new Pix();
+                $pix->campanha_id = $request->id;
+                $pix->linhas = $linhas;
+                $pix->chave = $resposta['pixCopiaECola'];
+                $pix->qrcode = $resposta['location'];
+                $pix->lista = json_encode($numeros);
+                $pix->txid = $txid;
+                $pix->expire = 86401;
+                $pix->situacao = 0;
+                $pix->save();
+
+                foreach ($numeros as $numero){
+                    $bilhete = CampanhaBilhete::where('id', $numero)
+                        ->first();
+
+                    $bilhete->expira = Carbon::now()->addHours(24);
+                    $bilhete->save();
+                }
+
+                DB::commit();
+
+                return redirect()->route('site.usuarios.campanhas')->with('message', "Chave PIX gerada com sucesso");
+
+            } catch (\Exception $e) {
+                DB::rollBack();
+                dd($e->getMessage());
+            }
+
+        } catch (\Exception $e) {
+            return back()->with('message_fail', "ERROR: HOUVE UM ERRO AO GERAR CHAVE PIX: {$e->getMessage()}");
+        }
+    }
+
+    /*public function pagar_pix_post(PagarPixStoreRequest $request): RedirectResponse
+    {
+
+        try {
+
             if ( config('app.merchant_ambient') == 1 ){
                 $environment = Environment::production();
                 $merchant = new Merchant(config('app.merchant_id'), config('app.merchant_key'));
@@ -179,7 +276,7 @@ class PagamentoController extends Controller
         } catch (\Exception $e) {
             return back()->with('message_fail', "ERROR: HOUVE UM ERRO AO GERAR CHAVE PIX");
         }
-    }
+    }*/
 
     public function imprimirPix($pix_id)
     {
@@ -187,11 +284,12 @@ class PagamentoController extends Controller
         $pix = Pix::findOrFail($pix_id);
 
         $chave = $pix->chave;
-        $linhas = $pix->linhas;
+        $qrcode = $pix->qrcode;
+
 
         return view("site.pagamentos.pix", [
             'chave' => $chave,
-            'linhas' => $linhas,
+            'qrcode' => $qrcode,
             'pix_id' => $pix_id,
         ]);
     }

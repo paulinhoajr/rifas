@@ -24,7 +24,7 @@
             <div class="row mb-2 mt-5">
                 <div class="col-md-4">
                     <img src="/images/logo_pix.png"><br><br>
-                    {!! QrCode::size(250)->generate($chave); !!} <br><br>
+                    {!! QrCode::size(250)->generate($qrcode); !!} <br><br>
                 </div>
                 <div class="col-md-8">
                     <span style="color: red;">PIX - Chave do tipo (Copia e Cola)</span> <br>

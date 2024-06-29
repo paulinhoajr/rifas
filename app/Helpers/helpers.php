@@ -339,6 +339,13 @@ if (!function_exists('dollar_to_real')) {
 	}
 }
 
+if (!function_exists('any_to_dollar')) {
+	function any_to_dollar($value, $places = 2)
+	{
+	    return number_format($value, $places === null ? 2 : $places);
+	}
+}
+
 if (!function_exists('dollarToRealTruncated')) {
 	function dollarToRealTruncated($value)
 	{

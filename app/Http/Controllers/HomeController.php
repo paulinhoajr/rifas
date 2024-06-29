@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Campanha;
 use App\Models\CampanhaBilhete;
 use App\Models\Pix;
+use App\Models\Webhook;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Paulinhoajr\Cielo\Ecommerce\CieloEcommerce;
-use Paulinhoajr\Cielo\Ecommerce\Environment;
-use Paulinhoajr\Cielo\Ecommerce\Request\CieloRequestException;
-use Paulinhoajr\Cielo\Merchant;
+
 
 class HomeController extends Controller
 {
@@ -26,6 +24,15 @@ class HomeController extends Controller
         return view('site.dashboard', [
             'campanhas' => $campanhas
         ]);
+    }
+
+    public function webhook()
+    {
+        $json = file_get_contents('php://input'); // Recebo o Json
+
+        $webhook = new Webhook();
+        $webhook->conteudo = $json;
+        $webhook->save();
     }
 
     public function campanha($id, $nome)
@@ -65,7 +72,7 @@ class HomeController extends Controller
         ]);
     }
 
-    public function cielo_pix_consulta()
+    /*public function cielo_pix_consulta()
     {
 
         if ( config('app.merchant_ambient') == 1 ){
@@ -145,7 +152,7 @@ class HomeController extends Controller
             DB::rollBack();
             dd($e->getCieloError());
         }
-    }
+    }*/
 
     public function numeros_reservados_consulta()
     {
@@ -175,8 +182,9 @@ class HomeController extends Controller
 
                 if ($result){
                     //rodar itens e cancelar numeros
-                    dd("teste");
+                    //dd("teste");
                     $bilhete->usuario_id = null;
+                    $bilhete->expira = null;
                     $bilhete->situacao = 0;
                     $bilhete->save();
                 }
@@ -186,7 +194,7 @@ class HomeController extends Controller
 
         } catch (\Exception|QueryException $e) {
             DB::rollBack();
-            dd($e->getCieloError());
+            dd($e->getMessage());
         }
     }
 

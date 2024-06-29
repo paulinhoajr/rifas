@@ -13,8 +13,9 @@ return new class extends Migration
             $table->json('lista');
             $table->integer('linhas');
             $table->text('chave');
-            $table->string('uniqid');
-            $table->string('paymentId');
+            $table->text('qrcode');
+            $table->string('txid');
+            $table->string('expire');
             $table->integer('situacao')->comment("0-novo 1-pago 2-cancelado");
             $table->timestamps();
             });

@@ -21,6 +21,7 @@ return [
     'sicredi_id' => env('SICREDI_ID', 'teste'),
     'sicredi_secret' => env('SICREDI_SECRET', 'teste'),
     'sicredi_pix' => env('SICREDI_PIX', 'teste'),
+    'sicredi_pix_descricao' => env('SICREDI_PIX_DESCRICAO', 'teste'),
 
 
     /*

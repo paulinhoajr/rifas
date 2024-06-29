@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
-class PagarStoreRequest extends FormRequest
+class PagarPixStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,8 @@ class PagarStoreRequest extends FormRequest
     {
         return [
             'id' => ['required'],
-            'numeros' => ['required']
+            'numeros' => ['required'],
+            'valor' => ['required'],
         ];
     }
 
