@@ -63,6 +63,7 @@ Route::group(['prefix' => '/pagamentos', 'where'=>['id'=>'[0-9]+']], function ()
 
             Route::get('/pagar/selecionar/{id}', 'pagar_selecionar')->name('pagar_selecionar');
             Route::get('/imprimirPix/{pix_id}', 'imprimirPix')->name('imprimirPix');
+            Route::get('/imprimirQRCODE/{pix_id}', 'imprimirQRCODE')->name('imprimirQRCODE');
 
             Route::post('/pagar/cartao', 'pagar_cartao')->name('pagar_cartao');
 

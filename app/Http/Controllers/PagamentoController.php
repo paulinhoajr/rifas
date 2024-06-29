@@ -15,16 +15,21 @@ use App\Models\Usuario;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Paulinhoajr\ApiPixSicredi\PixSicredi;
-use Paulinhoajr\Cielo\Ecommerce\CieloEcommerce;
-use Paulinhoajr\Cielo\Ecommerce\Environment;
-use Paulinhoajr\Cielo\Ecommerce\Request\CieloRequestException;
-use Paulinhoajr\Cielo\Ecommerce\Sale;
-use Paulinhoajr\Cielo\Merchant;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\Label\Alignment\LabelAlignmentCenter;
+use Endroid\QrCode\Label\Font\NotoSans;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 
 class PagamentoController extends Controller
 {
@@ -278,18 +283,46 @@ class PagamentoController extends Controller
         }
     }*/
 
+    public function imprimirQRCODE($pix_id)
+    {
+        $pix = Pix::findOrFail($pix_id);
+
+        $expira = \Carbon\Carbon::parse($pix->created_at)
+            ->addSeconds($pix->expire)->format('Y-m-d H:i:s');
+
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_URL, "https://" . $pix->qrcode);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $qrcode = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        $json['qrcode'] = $qrcode;
+        $json['httpcode'] = $httpcode;
+
+        $result = Builder::create()
+            ->writer(new PngWriter())
+            ->data($pix->chave)
+            ->encoding(new \Endroid\QrCode\Encoding\Encoding('UTF-8'))
+            ->size(300)
+            ->margin(10)
+            ->labelText('Válido até '. dateTimeUsParaDateTimeBr($expira))
+            ->labelFont(new NotoSans(12))
+            ->build();
+
+        return new Response($result->getString(), 200, ['Content-Type' => $result->getMimeType()]);
+
+    }
+
     public function imprimirPix($pix_id)
     {
 
         $pix = Pix::findOrFail($pix_id);
 
-        $chave = $pix->chave;
-        $qrcode = $pix->qrcode;
-
-
         return view("site.pagamentos.pix", [
-            'chave' => $chave,
-            'qrcode' => $qrcode,
+            'chave' => $pix->chave,
+            'linhas' => $pix->linhas,
             'pix_id' => $pix_id,
         ]);
     }
