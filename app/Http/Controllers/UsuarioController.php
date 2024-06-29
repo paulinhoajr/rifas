@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Site\UsuarioStoreRequest;
 use App\Http\Requests\Site\UsuarioUpdateRequest;
+use App\Models\Campanha;
+use App\Models\CampanhaBilhete;
 use App\Models\Usuario;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +22,29 @@ class UsuarioController extends Controller
     {
 
         return view('site.usuarios.index');
+    }
+
+    public function campanhas()
+    {
+        $bilhetes = CampanhaBilhete::where('usuario_id', Auth::user()->id)
+            ->groupBy('campanha_id')
+            ->pluck('campanha_id');
+
+        $campanhas = Campanha::whereIn('id', $bilhetes)->get();
+        $campanhas->each(function ($campanha) {
+            $campanha->total = strlen($campanha->bilhete->quantidade);
+            $campanha->bilhetes = $campanha->bilhetes->where('campanha_id', $campanha->id)->where('usuario_id', Auth::user()->id);
+            $campanha->abertos = $campanha->bilhetes->where('situacao', 1);
+            $campanha->abertosTotal = $campanha->abertos->count();
+            if ($campanha->pix){
+                $campanha->pix_aberto = $campanha->pix->where('situacao', 0)->first();
+            }
+
+        });
+
+        return view('site.usuarios.campanhas', [
+            'campanhas' => $campanhas
+        ]);
     }
 
     public function create()

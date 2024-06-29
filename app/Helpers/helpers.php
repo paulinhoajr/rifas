@@ -8,6 +8,17 @@ use voku\helper\ASCII;
 use Illuminate\Database\QueryException;
 use App\Models\Tenants\Logs;
 
+if(!function_exists('isWindows')) {
+    function isWindows()
+    {
+        $isWindows = false;
+        if(strcasecmp(substr(PHP_OS, 0, 3), 'WIN') == 0){
+            $isWindows = true;
+        }
+        return $isWindows;
+    }
+}
+
 if(!function_exists('urlClear')) {
     function urlClear ($trocaracentos)
     {

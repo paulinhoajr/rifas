@@ -15,7 +15,7 @@
 
             @include('_partials.message')
 
-            <div class="col-md-8">
+            <div class="col-md-8 mt-5">
                 <div class="row mb-3">
                     @foreach($campanha->premios as $premio)
                     <div class="col-sm-6">
@@ -45,7 +45,22 @@
 
             <div class="col-md-4">
 
-                <h2 class="mt-5">Descrição</h2>
+                <h2 class="mt-5">Informações</h2>
+                <small>- Mínimo de nº: <strong>{{ $campanha->minima }}</strong> | Máximo de nº: <strong>{{ $campanha->maxima }}</strong></small>
+
+                <h3 class="mt-4">- Preço R$ {{ dollar_to_real($campanha->preco) }}</h3>
+
+                <h5 class="mt-2">- Reserva limite em dias <strong>({{ $campanha->tempo }})</strong></h5>
+
+                @if($campanha->promocao)
+                    <h5 class="mt-2">- Promoção</h5>
+                    <small>* Comprando um mínimo de {{ $campanha->promocao->quantidade }} números,
+                        você pagará apenas R${{ dollar_to_real($campanha->promocao->valor) }}</small>
+                @endif
+
+                <h5 class="mt-2">- Sorteio: {{ $campanha->sorteio->nome }}</h5>
+
+                <h5 class="mt-2">- Descrição</h5>
 
                 {!! $campanha->descricao !!}
 
@@ -55,28 +70,56 @@
 
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary">
+                    Todos <span class="badge text-bg-secondary">{{ $campanha->bilhete->quantidade }}</span>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Disponíveis <span class="badge text-bg-secondary">{{ $total_disponivel->count() }}</span>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Reservados <span class="badge text-bg-secondary">{{ $total_reservados->count() }}</span>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Comprados <span class="badge text-bg-secondary">{{ $total_comprados->count() }}</span>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Meus Nº <span class="badge text-bg-secondary">{{ $total_meus->count() }}</span>
+                </button>
 
-            <h2 class="mt-3">Números</h2>
-            @php
-                $total = strlen($campanha->bilhete->quantidade);
-            @endphp
-
-            <form id="form" name="form" action="{{ route('site.pagamentos.pagar') }}" method="post" onSubmit="document.getElementById('avancar').disabled=true;">
-
-                @csrf
-
-                <input type="hidden" name="id" value="{{ $campanha->id }}">
-
-                <div class="col-md-12 mb-2 text-center">
-                @foreach($campanha->bilhetes as $bilhete)
-                    <a {{--{{ $bilhete->situacao > 0 ? "" : "" }}--}} id="{{ $bilhete->id }}" class="btn mb-2 mr-2 numeros {{ $bilhete->situacao==1 ? "btn-warning reservado" : ($bilhete->situacao==2 ? "btn-success escolhido" : "btn-outline-info") }}">{{ mb_str_pad($bilhete->numero, $total, '0', STR_PAD_LEFT) }}</a>
-                @endforeach
+            </div>
+            <div class="col-md-12 mt-1">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: {{ (  $total_comprados->count() * 100 ) / $campanha->bilhete->quantidade}}%" aria-valuenow="{{ (  $total_comprados->count() * 100 ) / $campanha->bilhete->quantidade }}" aria-valuemin="0" aria-valuemax="{{ $campanha->bilhete->quantidade }}"></div>
                 </div>
+            </div>
 
-                <div class="col-md-12 mb-2">
-                    <button class="btn btn-success btn-lg" id="avancar">Avançar</button>
-                </div>
-            </form>
+            <div class="col-md-12 mt-3">
+                <h2 class="">Números</h2>
+                @php
+                    $total = strlen($campanha->bilhete->quantidade);
+                @endphp
+                <form id="form" name="form" action="{{ route('site.pagamentos.avancar') }}" method="post" onSubmit="document.getElementById('avancar').disabled=true;">
+
+                    @csrf
+
+                    <input type="hidden" name="id" value="{{ $campanha->id }}">
+
+                    <div class="col-md-12 mb-2 text-center">
+                        @foreach($campanha->bilhetes as $bilhete)
+                            <a {{--{{ $bilhete->situacao > 0 ? "" : "" }}--}} id="{{ $bilhete->id }}" class="btn mb-2 mr-2 numeros {{ $bilhete->situacao==1 ? "btn-warning reservado" : ($bilhete->situacao==2 ? "btn-success escolhido" : "btn-outline-info") }}">{{ mb_str_pad($bilhete->numero, $total, '0', STR_PAD_LEFT) }}</a>
+                        @endforeach
+                    </div>
+
+                    <div class="col-md-12 mt-5">
+                        <button class="btn btn-primary btn-lg float-end mb-5" id="avancar">
+                            Avançar para pagar <svg class="bi"><use xlink:href="#icon_avancar"/></svg>
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
         </div>
 
     </div>

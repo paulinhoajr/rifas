@@ -21,7 +21,7 @@ class Campanha extends Model
 
     public function bilhetes()
     {
-        return $this->hasMany(CampanhaBilhete::class);
+        return $this->hasMany(CampanhaBilhete::class); //->orderByDesc('situacao')
     }
 
     public function premios()
@@ -39,5 +39,14 @@ class Campanha extends Model
         return $this->belongsTo(Sorteio::class);
     }
 
+    public function promocao()
+    {
+        return $this->hasOne(Promocao::class);
+    }
+
+    public function pix()
+    {
+        return $this->hasOne(Pix::class);
+    }
 
 }

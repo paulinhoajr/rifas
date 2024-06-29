@@ -13,6 +13,7 @@ return new class extends Migration
             $table->foreignId('campanha_id');
             $table->foreignId('usuario_id')->nullable();
             $table->integer('situacao')->default(0)->comment('0-novo 1-reservado 2-escolhido');
+            $table->dateTime('expira')->nullable();
             $table->timestamps();
             });
     }

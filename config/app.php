@@ -18,6 +18,9 @@ return [
 
     'paginate' => env('PAGINATE', 30),
     'name' => env('APP_NAME', 'Laravel'),
+    'sicredi_id' => env('SICREDI_ID', 'teste'),
+    'sicredi_secret' => env('SICREDI_SECRET', 'teste'),
+    'sicredi_pix' => env('SICREDI_PIX', 'teste'),
 
 
     /*

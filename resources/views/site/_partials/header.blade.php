@@ -6,18 +6,25 @@
 
     <ul class="nav nav-pills">
 
-        @if(Auth::check())
-            <li class="nav-item">
-                <a href="{{ route('site.index') }}" class="nav-link {{ setActive('home') }}">Home</a>
-            </li>
+        <li class="nav-item">
+            <a href="{{ route('site.index') }}" class="nav-link {{ setActive('home') }}">Home</a>
+        </li>
 
+        @if(Auth::check())
+
+            <li class="nav-item">
+                <a href="{{ route('site.usuarios.campanhas') }}" class="nav-link {{ setActive('usuarios/campanhas') }}">Minhas Campanhas</a>
+            </li>
             <li class="nav-item">
                 <a href="{{ route('site.usuarios.edit') }}" class="nav-link {{ setActive('usuarios/edit') }}">Meus Dados</a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('usuario.logout') }}" class="nav-link">Sair</a>
             </li>
-
+        @else
+            <li class="nav-item">
+                <a href="{{ route('login') }}" class="nav-link {{ setActive('login') }}">Entrar</a>
+            </li>
         @endif
 
     </ul>
