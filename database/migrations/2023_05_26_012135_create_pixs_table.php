@@ -10,6 +10,7 @@ return new class extends Migration
         Schema::create('pixs', function (Blueprint $table) {
             $table->increments('id');
             $table->foreignId('campanha_id');
+            $table->foreignId('usuario_id');
             $table->json('lista');
             $table->integer('linhas');
             $table->text('chave');

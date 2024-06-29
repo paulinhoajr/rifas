@@ -160,7 +160,7 @@ class PagamentoController extends Controller
 
             try {
 
-                $resposta = $pix->criarCobranca($cobranca, null);
+                $resposta = $pix->criarCobranca($cobranca, $txid);
 
                 $linhas = round(strlen($resposta['pixCopiaECola']) / 120) + 1;
 
@@ -171,6 +171,7 @@ class PagamentoController extends Controller
 
                 $pix = new Pix();
                 $pix->campanha_id = $request->id;
+                $pix->usuario_id = $usuario->id;
                 $pix->linhas = $linhas;
                 $pix->chave = $resposta['pixCopiaECola'];
                 $pix->qrcode = $resposta['location'];

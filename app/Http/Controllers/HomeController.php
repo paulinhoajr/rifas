@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Sicredi\SicrediConecta;
 use App\Models\Campanha;
 use App\Models\CampanhaBilhete;
 use App\Models\Pix;
@@ -10,6 +11,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Paulinhoajr\ApiPixSicredi\PixSicredi;
 
 
 class HomeController extends Controller
@@ -33,6 +35,35 @@ class HomeController extends Controller
         $webhook = new Webhook();
         $webhook->conteudo = $json;
         $webhook->save();
+    }
+
+    public function sicredi_pix_consulta()
+    {
+        $sicredi = new SicrediConecta();
+
+        $token = $sicredi->conecta();
+
+        $pixSicredi = new PixSicredi(null, $token);
+
+        $pixs = Pix::where('situacao', 0)->get();
+
+        foreach ($pixs as $pix) {
+            $resposta = $pixSicredi->dadosDeCobranca($pix->txid);
+
+            if ($resposta['status'] == "CONCLUIDA"){
+                $pix->situacao = 1;
+                $pix->save();
+
+                $bilhetes = CampanhaBilhete::whereIn('id', json_decode($pix->lista))
+                    ->where('situacao', 1)
+                    ->whereNotNull('expira')
+                    ->get();
+
+                foreach ($bilhetes as $bilhete) {
+
+                }
+            }
+        }
     }
 
     public function campanha($id, $nome)

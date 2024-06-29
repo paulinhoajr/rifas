@@ -19,7 +19,7 @@ Route::controller(HomeController::class)
         Route::get('/teste', 'teste')->name('teste');
         Route::get('/webhook', 'webhook')->name('webhook');
 
-        Route::get('/cielo_pix_consulta', 'cielo_pix_consulta')->name('cielo_pix_consulta');
+        Route::get('/sicredi_pix_consulta', 'sicredi_pix_consulta')->name('sicredi_pix_consulta');
         Route::get('/numeros_reservados_consulta', 'numeros_reservados_consulta')->name('numeros_reservados_consulta');
 
     });
