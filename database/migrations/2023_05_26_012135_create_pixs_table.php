@@ -8,7 +8,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pixs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->foreignId('campanha_id');
             $table->foreignId('usuario_id');
             $table->json('lista');

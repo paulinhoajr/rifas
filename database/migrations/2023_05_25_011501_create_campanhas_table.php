@@ -3,15 +3,21 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-return new aclass extends Migration
+return new class extends Migration
 {
     public function up(): void
     {
         Schema::create('campanhas', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignId('categoria_id');
-            $table->foreignId('bilhete_id');
-            $table->foreignId('sorteio_id');
+            $table->bigIncrements('id');
+            $table->foreignId('categoria_id')->constrained('categorias')
+                ->onUpdate('restrict')
+                ->onDelete('cascade');
+            $table->foreignId('bilhete_id')->constrained('bilhetes')
+                ->onUpdate('restrict')
+                ->onDelete('cascade');
+            $table->foreignId('sorteio_id')->constrained('sorteios')
+                ->onUpdate('restrict')
+                ->onDelete('cascade');
             $table->string('nome');
             $table->double('preco')->nullable();
             $table->string('whatsapp')->nullable();

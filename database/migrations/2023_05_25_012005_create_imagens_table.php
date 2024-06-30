@@ -8,8 +8,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('imagens', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignId('premio_id');
+            $table->bigIncrements('id');
+            $table->foreignId('premio_id')->constrained('premios')
+                ->onUpdate('restrict')
+                ->onDelete('cascade');
             $table->string('nome')->nullable();
             $table->string('caminho');
             $table->integer('ordem')->nullable();

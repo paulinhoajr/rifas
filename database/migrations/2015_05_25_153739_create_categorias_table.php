@@ -7,15 +7,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('sorteios', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nome')->nullable();
+        Schema::create('categorias', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('nome');
             $table->timestamps();
             });
     }
 
     public function down(): void
     {
-        Schema::drop('sorteios');
+        Schema::drop('categorias');
     }
 };

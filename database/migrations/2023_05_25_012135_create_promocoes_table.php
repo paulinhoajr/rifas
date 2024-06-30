@@ -8,8 +8,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('promocoes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignId('campanha_id');
+            $table->bigIncrements('id');
+            $table->foreignId('campanha_id')->constrained('campanhas')
+                ->onUpdate('restrict')
+                ->onDelete('cascade');
             $table->integer('quantidade')->nullable();
             $table->double('valor')->nullable();
             $table->integer('situcao')->nullable();

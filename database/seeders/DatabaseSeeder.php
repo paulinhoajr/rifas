@@ -26,9 +26,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\Usuario::factory(50)->create();
         \App\Models\Campanha::factory(8)->create();
 
-        for ($a=0;$a<=8;$a++){
+        for ($a=1;$a<=8;$a++){
 
-            for ($i=0;$i<=200;$i++){
+            for ($i=1;$i<=100;$i++){
                 $bilhete = new CampanhaBilhete();
                 $bilhete->numero = $i;
                 $bilhete->campanha_id = $a;

@@ -126,7 +126,7 @@ class PagamentoController extends Controller
             }
 
             $usuario = Usuario::where('id', Auth::user()->id)->first();
-
+            $campanha = Campanha::findOrFail($request->id);
             $cobranca  = [
                 "calendario" => [
                     //"dataDeVencimento" => "2040-04-01",
@@ -142,7 +142,7 @@ class PagamentoController extends Controller
                     "modalidadeAlteracao" => 1
                 ],
                 "chave" => config('app.sicredi_pix'),
-                "solicitacaoPagador" => config('app.sicredi_pix_descricao')
+                "solicitacaoPagador" => $campanha->nome,
                 /*"infoAdicionais" => [
                   [
                       "nome" => "teste",
