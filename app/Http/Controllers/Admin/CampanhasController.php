@@ -98,7 +98,7 @@ class CampanhasController extends Controller
             $campanha->situacao = $request->situacao;
             $campanha->save();
 
-            $bilhetes = $campanha->bilhete->quantidade;
+            $bilhetes = $campanha->bilhete->quantidade - 1;
 
             for ($i=0;$i<=$bilhetes;$i++){
                 $bilhete = new CampanhaBilhete();

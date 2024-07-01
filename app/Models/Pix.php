@@ -15,4 +15,9 @@ class Pix extends Model
         return $this->belongsTo(Campanha::class);
     }
 
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class);
+    }
+
 }

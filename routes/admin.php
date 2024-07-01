@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Admin\CampanhasController;
 use App\Http\Controllers\Admin\PremiosController;
 use App\Http\Controllers\Admin\PromocoesController;
+use App\Http\Controllers\Admin\PixsController;
 
 Route::group(['prefix' => '/admin', 'where'=>['id'=>'[0-9]+']], function () {
 
@@ -14,6 +15,15 @@ Route::group(['prefix' => '/admin', 'where'=>['id'=>'[0-9]+']], function () {
         ->group(function () {
             Route::get('/', 'index')->name('index');
         });
+
+    Route::group(['prefix' => '/pixs'], function () {
+        Route::controller(PixsController::class)
+            ->name('admin.')
+            ->group(function () {
+                Route::get('/', 'index')->name('pixs.index');
+                Route::get('/show/{id}', 'show')->name('pixs.show');
+            });
+    });
 
     Route::group(['prefix' => '/usuarios'], function () {
         Route::controller(UsuarioController::class)

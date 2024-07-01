@@ -127,6 +127,7 @@ class PagamentoController extends Controller
 
             $usuario = Usuario::where('id', Auth::user()->id)->first();
             $campanha = Campanha::findOrFail($request->id);
+
             $cobranca  = [
                 "calendario" => [
                     //"dataDeVencimento" => "2040-04-01",

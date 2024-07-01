@@ -8,6 +8,14 @@ use voku\helper\ASCII;
 use Illuminate\Database\QueryException;
 use App\Models\Tenants\Logs;
 
+if(!function_exists('expire_date')) {
+    function expire_date($date, $expire)
+    {
+        return Carbon::parse($date)
+            ->addSeconds($expire)->format('d/m/y H:i:s');
+    }
+}
+
 if(!function_exists('isWindows')) {
     function isWindows()
     {
