@@ -9,7 +9,7 @@ php artisan storage:link
 php artisan queue:work
 php artisan migrate:refresh --seed
 
-teste
+teste 2
 
 sudo supervisorctl restart all
 git push voopeclubes master
