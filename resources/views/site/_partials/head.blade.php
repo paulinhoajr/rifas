@@ -45,6 +45,7 @@
 <link href="{{asset('css/dashboard.css')}}" rel="stylesheet">
 <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet">
 <link href="{{ asset('css/cookiealert.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
 
 <style>
     .bd-placeholder-img {

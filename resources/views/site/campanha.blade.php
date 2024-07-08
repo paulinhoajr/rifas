@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row mb-3">
 
-            <h2 class="mt-3">Campanha {{ $campanha->nome }}</h2>
+            <h2 class="mt-3 text-center underline">Campanha {{ $campanha->nome }}</h2>
 
             @include('_partials.message')
 
