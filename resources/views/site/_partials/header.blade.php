@@ -7,7 +7,7 @@
     <ul class="nav nav-pills">
 
         <li class="nav-item">
-            <a href="{{ route('site.index') }}" class="nav-link {{ setActive('home') }}">Home</a>
+            <a href="{{ route('site.index') }}" class="nav-link {{ setActive('home') }}">Inicial</a>
         </li>
 
         @if(Auth::check())

@@ -22,6 +22,13 @@ return [
     'sicredi_secret' => env('SICREDI_SECRET', 'teste'),
     'sicredi_pix' => env('SICREDI_PIX', 'teste'),
 
+    'site_title' => env('APP_NAME', 'Laravel'),
+    'site_keywords' => env('APP_KEYWORDS', 'rifa, rifatri, aposta, números'),
+    'site_description' => env('APP_DESCRIPTION', 'Site Rifatri para compra de números de rifa'),
+    'site_logo' => env('APP_LOGO','images/logo.png'),
+    'site_date' => env('APP_DATE', '2024-07-05'),
+    'captcha' => env('CAPTCHA_SECRET'),
+
 
     /*
     |--------------------------------------------------------------------------

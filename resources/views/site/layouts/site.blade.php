@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="{{ config('app.locale') }}" data-bs-theme="auto">
     <head>
-        <title>Site</title>
+        <title>@section('title') {{ config('app.site_title') }} @show</title>
 
         @include('site._partials.head')
 
@@ -17,14 +17,9 @@
         <div class="container">
         @include('site._partials.header')
 
-        <main style="bottom: 0;">
-            {{--<h1 class="visually-hidden">Headers examples</h1>--}}
-
-                {{--<div class="b-example-divider"></div>--}}
 
                 @yield('content')
 
-        </main>
 
         @include('site._partials.footer')
 

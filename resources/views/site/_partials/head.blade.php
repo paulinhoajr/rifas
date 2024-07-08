@@ -1,10 +1,34 @@
 <script src="{{asset('js/color-modes.js')}}"></script>
 
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-<meta name="generator" content="Hugo 0.118.2">
+
+<meta http-equiv="imagetoolbar" content="no"/>
+<meta http-equiv="window-target" content="standard"/>
+<meta http-equiv="Expires" content="-1"/>
+<meta http-equiv="Content-Language" content="pt-br"/>
+<meta http-equiv="cache-control" content="no-cache"/>
+<meta name="resource-type" content="document"/>
+<meta name="classification" content="Internet"/>
+<meta name="distribution" content="Global"/>
+<meta name="doc-class" content="Completed"/>
+<meta name="generator" content="JetBrains PhpStorm"/>
+<meta name="MSSmartTagsPreventParsing" content="true"/>
+<meta name="author" content="Voope Soluções"/>
+<link rel="author" href="https://www.voope.com.br" title="Voope"/>
+<meta name="revisit-after" content="30 Days"/>
+<meta name="robots" content="index, follow">
+
+<!-- CSRF Token -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<meta name="DC.date.created" content="{{ config('app.site_date') }}"/>
+
+<meta name="DC.title" content="{{ config('app.site_title') }}"/>
+
+<meta name="keywords" content="{{ config('app.site_keywords') }}"/>
+<meta name="description" content="{{ config('app.site_description') }}"/>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" href="{{asset('images/favicons/apple-touch-icon.png')}}" sizes="180x180">

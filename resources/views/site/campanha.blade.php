@@ -46,7 +46,10 @@
             <div class="col-md-4">
 
                 <h2 class="mt-5">Informações</h2>
-                <small>- Mínimo de nº: <strong>{{ $campanha->minima }}</strong> | Máximo de nº: <strong>{{ $campanha->maxima }}</strong></small>
+                <small>
+                    - Mínimo de números: <strong>{{ $campanha->minima }}</strong><br>
+                    - Máximo de números: <strong>{{ $campanha->maxima }}</strong>
+                </small>
 
                 <h3 class="mt-4">- Preço R$ {{ dollar_to_real($campanha->preco) }}</h3>
 
