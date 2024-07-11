@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Campanha;
+use App\Models\Categoria;
 use App\Models\Imagem;
 use App\Models\Premio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class PremiosController extends Controller
@@ -96,9 +98,18 @@ class PremiosController extends Controller
         return back()->with('message', 'Premio atualizado!');
     }
 
+    public function delete($id): View
+    {
+        $premio = Premio::findOrFail($id);
+
+        return view('admin.premios.delete', [
+            'premio' => $premio
+        ]);
+    }
+
     public function destroy($id)
     {
-        //Premio::destroy($id);
+        Premio::destroy($id);
 
         return redirect()->route('admin.premios.index')->with('message', 'Premio excluído!');
     }

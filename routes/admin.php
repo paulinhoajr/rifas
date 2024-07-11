@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CampanhasController;
 use App\Http\Controllers\Admin\PremiosController;
 use App\Http\Controllers\Admin\PromocoesController;
 use App\Http\Controllers\Admin\PixsController;
+use App\Http\Controllers\Admin\CategoriasController;
 
 Route::group(['prefix' => '/admin', 'where'=>['id'=>'[0-9]+']], function () {
 
@@ -98,6 +99,23 @@ Route::group(['prefix' => '/admin', 'where'=>['id'=>'[0-9]+']], function () {
             });
     });
 
+    Route::group(['prefix' => '/categorias'], function () {
+        Route::controller(CategoriasController::class)
+            ->name('admin.')
+            ->group(function () {
+                Route::get('/', 'index')->name('categorias.index');
+                Route::get('/create', 'create')->name('categorias.create');
+                Route::post('/store', 'store')->name('categorias.store');
+                Route::get('/show/{id}', 'show')->name('categorias.show');
+                Route::get('/edit/{id}', 'edit')->name('categorias.edit');
+                Route::post('/update', 'update')->name('categorias.update');
+                Route::get('/delete/{id}', 'delete')->name('categorias.delete');
+                Route::get('/destroy/{id}', 'destroy')->name('categorias.destroy');
+
+            });
+    });
+
+
     /*Route::group(['prefix' => '/documentos'], function () {
         Route::controller(DocumentoController::class)
             ->name('admin.')
@@ -113,6 +131,8 @@ Route::group(['prefix' => '/admin', 'where'=>['id'=>'[0-9]+']], function () {
             });
     });*/
 
+
+
 })->middleware(['auth','admin', 'verified']);
 
 
@@ -121,5 +141,5 @@ Route::resource('admin/imagens', 'Admin\ImagensController');
 Route::resource('admin/premios', 'Admin\PremiosController');
 Route::resource('admin/promocoes', 'Admin\PromocoesController');
 Route::resource('admin/bilhetes', 'Admin\BilhetesController');
-Route::resource('admin/categorias', 'Admin\CategoriasController');
+
 Route::resource('admin/sorteios', 'Admin\SorteiosController');*/

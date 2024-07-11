@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\Models\Campanha;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CategoriasController extends Controller
 {
@@ -37,10 +39,12 @@ class CategoriasController extends Controller
 
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
-        Categoria::create($requestData);
+
+        $categoria = new Categoria;
+        $categoria->nome = $requestData['nome'];
+        $categoria->save();
 
         return redirect('admin/categorias')->with('flash_message', 'Categoria added!');
     }
@@ -59,15 +63,25 @@ class CategoriasController extends Controller
         return view('admin.categorias.edit', compact('categoria'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
-        $categoria = Categoria::findOrFail($id);
-        $categoria->update($requestData);
+
+        $categoria = Categoria::findOrFail($request->categoria_id);
+        $categoria->nome = $requestData['nome'];
+        $categoria->save();
 
         return redirect('admin/categorias')->with('flash_message', 'Categoria updated!');
+    }
+
+    public function delete($id): View
+    {
+        $categoria = Categoria::where('id', $id)->first();
+
+        return view('admin.categorias.delete', [
+            'categoria' => $categoria
+        ]);
     }
 
     public function destroy($id)

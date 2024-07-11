@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Novo Prêmio</h1>
+        <h1 class="h2">Nova Promoção</h1>
         {{--<div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -35,7 +35,7 @@
 
                 <div class="col-sm-4">
                     <label for="quantidade" class="form-label">QTD de números</label>
-                    <input type="text" class="form-control" id="quantidade" name="quantidade" placeholder="Nome" value="{{ old('quantidade') }}" required>
+                    <input type="text" class="form-control" id="quantidade" name="quantidade" placeholder="QTD de números" value="{{ old('quantidade') }}" required>
                 </div>
 
                 {{--<hr class="my-4">--}}
@@ -48,7 +48,7 @@
 
             <hr class="my-4">
 
-            <button class="float-end btn btn-primary" type="submit">Criar Prêmio</button>
+            <button class="float-end btn btn-primary" type="submit">Criar Promoção</button>
         </form>
     </div>
 @endsection

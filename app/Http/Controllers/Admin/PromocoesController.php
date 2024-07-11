@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Campanha;
+use App\Models\Categoria;
 use App\Models\Promocao;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PromocoesController extends Controller
 {
@@ -21,17 +23,17 @@ class PromocoesController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $promocoes = Promocao::where('campanha_id', 'LIKE', "%$keyword%")
+            $promocaoes = Promocao::where('campanha_id', 'LIKE', "%$keyword%")
                 ->orWhere('quantidade', 'LIKE', "%$keyword%")
                 ->orWhere('valor', 'LIKE', "%$keyword%")
                 ->orWhere('status', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $promocoes = Promocao::latest()->paginate($perPage);
+            $promocaoes = Promocao::latest()->paginate($perPage);
         }
 
         return view('admin.promocoes.index',[
-            'promocoes' => $promocoes
+            'promocoes' => $promocaoes
         ]);
     }
 
@@ -52,9 +54,11 @@ class PromocoesController extends Controller
 			'valor' => 'required',
 		]);
 
-        $campanha = Campanha::findOrFail($request->campanha_id);
+        $promocao = Promocao::where('campanha_id', $request->campanha_id)
+            ->where('situcao', 1)
+            ->first();
 
-        if ($campanha){
+        if ($promocao){
             return back()->with('message_alert', 'Essa campanha já tem uma promoção!');
         }
 
@@ -62,6 +66,7 @@ class PromocoesController extends Controller
         $promocao->campanha_id = $request->campanha_id;
         $promocao->quantidade = $request->quantidade;
         $promocao->valor = $request->valor;
+        $promocao->situcao = 1;
         $promocao->save();
 
         return redirect()->route('admin.promocoes.index')->with('message', 'Promoção inserida!');
@@ -69,29 +74,46 @@ class PromocoesController extends Controller
 
     public function show($id)
     {
-        $promoco = Promocao::findOrFail($id);
+        $promocao = Promocao::findOrFail($id);
 
-        return view('admin.promocoes.show', compact('promoco'));
+        return view('admin.promocoes.show', compact('promocao'));
     }
 
     public function edit($id)
     {
-        $promoco = Promocao::findOrFail($id);
+        $promocao = Promocao::findOrFail($id);
 
-        return view('admin.promocoes.edit', compact('promoco'));
+        return view('admin.promocoes.edit', [
+            'promocao' => $promocao,
+            'campanhas' => Campanha::orderByDesc('id')->get()
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $this->validate($request, [
-			'campanha_id' => 'required'
+			'campanha_id' => 'required',
+			'promocao_id' => 'required',
+			'quantidade' => 'required',
+			'valor' => 'required',
 		]);
-        $requestData = $request->all();
 
-        $promoco = Promocao::findOrFail($id);
-        $promoco->update($requestData);
+        $promocao = Promocao::findOrFail($request->promocao_id);
+        $promocao->campanha_id = $request->campanha_id;
+        $promocao->quantidade = $request->quantidade;
+        $promocao->valor = $request->valor;
+        $promocao->save();
 
         return redirect('admin/promocoes')->with('flash_message', 'Promocao updated!');
+    }
+
+    public function delete($id): View
+    {
+        $promocao = Promocao::findOrFail($id);
+
+        return view('admin.promocoes.delete', [
+            'promocao' => $promocao
+        ]);
     }
 
     public function destroy($id)

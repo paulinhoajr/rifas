@@ -25,6 +25,12 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.categorias.index') }}">
+            <svg class="bi"><use xlink:href="#icon_usuarios"/></svg>
+            Categorias
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.premios.index') }}">
             <svg class="bi"><use xlink:href="#icon_usuarios"/></svg>
             Prêmios
