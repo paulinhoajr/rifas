@@ -6,7 +6,7 @@
 
         <div class="col-md-12">
 
-            <h2 class="mt-3 text-center underline">Campanha</h2>
+            <h2 class="mt-3 text-center underline">Campanhas</h2>
 
             @include('_partials.message')
 
