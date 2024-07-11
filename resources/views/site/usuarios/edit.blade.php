@@ -19,6 +19,10 @@
                     <label for="cpf">CPF</label>
                 </div>
                 <div class="form-floating mt-3">
+                    <input name="phone" type="text" class="form-control" id="phone" value="{{ $usuario->phone }}" placeholder="(00) 0 0000-0000" required>
+                    <label for="phone">CELULAR</label>
+                </div>
+                <div class="form-floating mt-3">
                     <input name="nome" type="text" class="form-control" id="nome" placeholder="Fulano de tal" value="{{$usuario->nome}}" required>
                     <label for="nome">Nome</label>
                 </div>
@@ -49,6 +53,7 @@
     <script>
 
         $("#cpf").mask("999.999.999-99");
+        $('#phone').mask('(99) 9 9999-9999');
         /*$("#nascimento").mask("99/99/9999");
         $("#assoc_data").mask("99/99/9999");
         $("#assoc_vencimento").mask("99/99/9999");

@@ -33,7 +33,10 @@
                     <label for="cpf" class="form-label">CPF</label>
                     <input type="cpf" class="form-control" id="cpf" name="cpf" placeholder="000.000.000-00" required>
                 </div>
-
+                <div class="col-sm-4">
+                    <label for="phone" class="form-label">CELULAR</label>
+                    <input name="phone" type="text" class="form-control" id="phone" value="{{ old('phone') }}" placeholder="(00) 0 0000-0000" required>
+                </div>
                 <div class="col-sm-3">
                     <label for="password" class="form-label">Senha</label>
                     <input type="password" autocomplete="new-password" class="form-control" id="password" name="password" required>
@@ -71,6 +74,7 @@
     <script>
 
         $("#cpf").mask("999.999.999-99");
+        $('#phone').mask('(99) 9 9999-9999');
         /*$("#nascimento").mask("99/99/9999");
         $("#assoc_data").mask("99/99/9999");
         $("#assoc_vencimento").mask("99/99/9999");

@@ -14,8 +14,12 @@
                 @csrf
 
                 <div class="form-floating">
-                    <input name="cpf" type="text" class="form-control" id="cpf" value="{{ old('cpf') }}" required>
+                    <input name="cpf" type="text" class="form-control" id="cpf" value="{{ old('cpf') }}" placeholder="000.000.000-00" required>
                     <label for="cpf">CPF</label>
+                </div>
+                <div class="form-floating mt-3">
+                    <input name="phone" type="text" class="form-control" id="phone" value="{{ old('phone') }}" placeholder="(00) 0 0000-0000" required>
+                    <label for="phone">CELULAR</label>
                 </div>
                 <div class="form-floating mt-3">
                     <input name="nome" type="text" class="form-control" id="nome" placeholder="Fulano de tal" value="{{ old('nome') }}" required>
@@ -49,11 +53,12 @@
     <script>
 
         $("#cpf").mask("999.999.999-99");
+        $('#phone').mask('(99) 9 9999-9999');
         /*$("#nascimento").mask("99/99/9999");
         $("#assoc_data").mask("99/99/9999");
         $("#assoc_vencimento").mask("99/99/9999");
         $("#cr_vencimento").mask("99/99/9999");
-        $('#telefone').mask('(99) 9999-9999');
+
         $('#whatsapp').mask('(99) 9 9999-9999');
         $('#cep').mask('99999-999');*/
 

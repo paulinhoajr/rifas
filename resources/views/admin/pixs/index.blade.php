@@ -48,7 +48,7 @@
                 <tr @if($item->situacao==2) class="riscado"  @endif>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->campanha->nome }}</td>
-                    <td>{{ $item->usuario->nome }}</td>
+                    <td><a href="{{ route('admin.usuarios.show', ['id'=>$item->usuario->id]) }}">{{ $item->usuario->nome }}</a> </td>
                     <td>
                         @foreach($item->campanha->bilhetes->whereIn('id', json_decode($item->lista)) as $bilhete)
                             {{ $bilhete->numero }} -

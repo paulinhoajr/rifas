@@ -74,6 +74,7 @@ class UsuarioController extends Controller
             $usuario = new Usuario();
             $usuario->nome = $request->nome;
             $usuario->cpf = only_numbers($request->cpf);
+            $usuario->phone = only_numbers($request->phone);
             $usuario->email = $request->email;
             $usuario->password = Hash::make($request->password);
             $usuario->role = "ROLE_USUARIO";
@@ -117,6 +118,7 @@ class UsuarioController extends Controller
 
         $usuario->nome = $request->nome;
         $usuario->email = $request->email;
+        $usuario->phone = only_numbers($request->phone);
 
         if ($request->password != null) {
             $usuario->password = Hash::make($request->password);

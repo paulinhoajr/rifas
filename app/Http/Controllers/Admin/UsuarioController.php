@@ -56,6 +56,7 @@ class UsuarioController extends Controller
             $usuario = new Usuario();
             $usuario->nome = $request->nome;
             $usuario->cpf = only_numbers($request->cpf);
+            $usuario->phone = only_numbers($request->phone);
             $usuario->email = $request->email;
             $usuario->email_verified_at = now();
             $usuario->password = Hash::make($request->password);
@@ -102,6 +103,7 @@ class UsuarioController extends Controller
 
             $usuario->nome = $request->nome;
             $usuario->email = $request->email;
+            $usuario->phone = only_numbers($request->phone);
 
             if (!$usuario->email_verified_at){
                 $usuario->email_verified_at = now();
