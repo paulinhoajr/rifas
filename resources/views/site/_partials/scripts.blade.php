@@ -6,3 +6,4 @@
 <script src="{{ asset('js/jquery.mask.js') }}"></script>
 <script src="{{ asset('js/cookiealert.js') }}"></script>
 <script src="{{ asset('js/bootstrap-show-notification.js')}}"></script>
+<script src="https://kit.fontawesome.com/5b1d1a6b53.js" crossorigin="anonymous"></script>

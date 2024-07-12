@@ -10,9 +10,7 @@
             <a href="{{ route('site.index') }}" class="nav-link {{ setActive('home') }}">Inicial</a>
         </li>
 
-        <li class="nav-item">
-            <a href="https://wa.me/5554981037463" class="nav-link">WhatsApp</a>
-        </li>
+
 
         @if(Auth::check())
 
@@ -31,6 +29,14 @@
                 <a href="{{ route('login') }}" class="nav-link {{ setActive('login') }}">Entrar</a>
             </li>
         @endif
+
+        <li class="nav-item">
+            <a href="https://wa.me/5554981037463" class="nav-link" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        </li>
+
+        <li class="nav-item">
+            <a href="https://www.instagram.com/" class="nav-link" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        </li>
 
     </ul>
 
