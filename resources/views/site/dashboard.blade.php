@@ -76,6 +76,7 @@
                                 {!! $campanha->descricao !!}
 
                             </div>
+                            <a href="{{ route('site.campanha', ['id'=>$campanha->id, 'nome'=>urlClear($campanha->nome)]) }}" class="btn btn-success">Ver números</a>
                         </div>
                     </div>
                 @endforeach
