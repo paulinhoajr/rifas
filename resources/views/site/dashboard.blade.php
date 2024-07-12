@@ -12,10 +12,10 @@
 
             <div class="row mb-2">
                 @foreach($campanhas as $campanha)
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6 mb-3 item_rifa">
                         <div class="row mb-3">
 
-                            <h2 class="mt-3 text-center underline">
+                            <h2 class="text-center underline">
                                 <a href="{{ route('site.campanha', ['id'=>$campanha->id, 'nome'=>urlClear($campanha->nome)]) }}">Campanha {{ $campanha->nome }}
                                     {{-- <img src="/storage/images/campanhas/thumbs/{{ /*$campanha->imagens->pluck('caminho')->first()*/ }}" width="100%" />--}}
                                 </a>
@@ -76,7 +76,10 @@
                                 {!! $campanha->descricao !!}
 
                             </div>
-                            <a href="{{ route('site.campanha', ['id'=>$campanha->id, 'nome'=>urlClear($campanha->nome)]) }}" class="btn btn-success">Ver números</a>
+                        </div>
+                        <div class="d-flex flex-row-reverse bd-highlight">
+                            <a href="{{ route('site.campanha', ['id'=>$campanha->id, 'nome'=>urlClear($campanha->nome)]) }}" class="btn btn-success bd-highlight">Ver números</a>
+
                         </div>
                     </div>
                 @endforeach
