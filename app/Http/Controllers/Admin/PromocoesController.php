@@ -81,7 +81,7 @@ class PromocoesController extends Controller
 
     public function edit($id)
     {
-        $promocao = Promocao::findOrFail($id);
+        $promocao = Promocao::withTrashed()->findOrFail($id);
 
         return view('admin.promocoes.edit', [
             'promocao' => $promocao,

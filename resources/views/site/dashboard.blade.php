@@ -54,10 +54,10 @@
                             <div class="col-md-6">
 
                                 <h2 class="mt-2">Informações</h2>
-                                <small>
+                                {{--<small>
                                     - Mínimo de números: <strong>{{ $campanha->minima }}</strong><br>
                                     - Máximo de números: <strong>{{ $campanha->maxima }}</strong>
-                                </small>
+                                </small>--}}
 
                                 <h3 class="mt-4">- Preço R$ {{ dollar_to_real($campanha->preco) }}</h3>
 
@@ -70,6 +70,7 @@
                                 @endif
 
                                 <h5 class="mt-2">- Sorteio: {{ $campanha->sorteio->nome }}</h5>
+                                <strong class="mt-1">- Data: {{ dateTimeUsParaDateTimeBr($campanha->data) }}</strong>
 
                                 <h5 class="mt-2">- Descrição</h5>
 

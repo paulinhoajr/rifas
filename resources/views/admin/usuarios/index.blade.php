@@ -27,7 +27,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">Email</th>
+                    <th scope="col">Fone</th>
                     <th scope="col">CPF</th>
                     <th scope="col">Regra</th>
                     <th scope="col">Situação</th>
@@ -39,8 +39,12 @@
             @foreach($usuarios as $usuario)
                 <tr>
                     <td>{{ $usuario->id }}</td>
-                    <td>{{ $usuario->nome }}</td>
-                    <td>{{ $usuario->email }}</td>
+                    <td>{{ $usuario->nome }} <br>
+                        <small><a href="mailto:{{ $usuario->email }}">{{ $usuario->email }}</a> </small>
+                    </td>
+                    <td>
+                        <a target="_blank" href="https://wa.me/55{{$usuario->phone}}">{{ mascara($usuario->phone, "celular") }}</a>
+                    </td>
                     <td>{{ mascara($usuario->cpf, "cpf") }}</td>
                     <td>{{ $usuario->role }}</td>
                     <td>

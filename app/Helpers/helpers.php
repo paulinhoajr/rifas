@@ -131,7 +131,7 @@ if(!function_exists('mascara')) {
                 $mascara = "###.###.###-##";
                 break;
             case 'celular':
-                $mascara = "(##)# ####-####";
+                $mascara = "(##) # ####-####";
                 break;
             case 'cep':
                 $mascara = "#####-###";

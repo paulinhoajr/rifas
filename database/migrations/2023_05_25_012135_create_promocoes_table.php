@@ -16,6 +16,7 @@ return new class extends Migration
             $table->double('valor')->nullable();
             $table->integer('situcao')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             });
     }
 

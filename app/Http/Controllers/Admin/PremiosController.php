@@ -72,7 +72,7 @@ class PremiosController extends Controller
     public function edit($id)
     {
         $premio = Premio::findOrFail($id);
-        $campanhas = Campanha::orderByDesc('id')->get();
+        $campanhas = Campanha::withTrashed()->orderByDesc('id')->get();
 
         return view('admin.premios.edit', [
             'premio' => $premio,

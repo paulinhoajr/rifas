@@ -1,5 +1,14 @@
 @extends('admin.layouts.admin')
 
+@section('head')
+    <style>
+        .riscado {
+            text-decoration: line-through;
+            color: red;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Lista de Promoções</h1>
@@ -36,7 +45,13 @@
             @foreach($promocoes as $promocao)
                 <tr>
                     <td>{{ $promocao->id }}</td>
-                    <td>#{{ $promocao->campanha->id }} {{ $promocao->campanha->nome }}</td>
+                    <td>
+                        @if($promocao->campanha)
+                            #{{ $promocao->campanha->id }} {{ $promocao->campanha->nome }}</td>
+                    @else
+                        <p class="riscado">deletado</p>
+                    @endif
+
                     <td>{{ $promocao->quantidade }}</td>
                     <td>{{ $promocao->valor }}</td>
                     <td>

@@ -1,5 +1,14 @@
 @extends('admin.layouts.admin')
 
+@section('head')
+    <style>
+        .riscado {
+            text-decoration: line-through;
+            color: red;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Lista de Prêmios</h1>
@@ -36,7 +45,13 @@
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->nome }}</td>
-                    <td>#{{ $item->campanha->id }} {{ $item->campanha->nome }}</td>
+                    <td>
+                        @if($item->campanha)
+                            #{{ $item->campanha->id }} {{ $item->campanha->nome }}
+                        @else
+                            <p class="riscado">deletado</p>
+                        @endif
+                    </td>
                     <td>
                         <div class="btn-group float-end" role="group" aria-label="">
                             {{--<a href="{{ route('admin.premios.show', ['id'=>$item->id]) }}" type="button" class="ri btn btn-outline-success btn-sm"><svg class="bi"><use xlink:href="#icon_mostrar"/></svg> MOSTRAR</a>--}}

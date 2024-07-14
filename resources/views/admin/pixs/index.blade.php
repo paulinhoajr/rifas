@@ -37,6 +37,7 @@
                 <th>#</th>
                 <th>Campanha</th>
                 <th>Usuário</th>
+                <th>Fone</th>
                 <th>Números</th>
                 <th>Expira</th>
                 <th>Situação</th>
@@ -49,6 +50,9 @@
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->campanha->nome }}</td>
                     <td><a href="{{ route('admin.usuarios.show', ['id'=>$item->usuario->id]) }}">{{ $item->usuario->nome }}</a> </td>
+                    <td>
+                        <a target="_blank" href="https://wa.me/55{{$item->usuario->phone}}">{{ mascara($item->usuario->phone, "celular") }}</a>
+                    </td>
                     <td>
                         @foreach($item->campanha->bilhetes->whereIn('id', json_decode($item->lista)) as $bilhete)
                             {{ $bilhete->numero }} -
