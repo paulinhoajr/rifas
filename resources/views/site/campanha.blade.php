@@ -66,7 +66,7 @@
 
                 <h5 class="mt-2">- Descrição</h5>
 
-                {!! $campanha->descricao !!}
+                {!! nl2br(e($campanha->descricao)) !!}
 
             </div>
         </div>
