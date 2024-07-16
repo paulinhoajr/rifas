@@ -75,9 +75,19 @@ class CampanhasController extends Controller
             'email' => 'required',
             'descricao' => 'required',
             'situacao' => 'required',
+            'inicial' => 'required',
 		]);
 
         try {
+
+            if ($request->inicial==1){
+                $camp = Campanha::where('inicial', 1)->first();
+                if ($camp){
+                    $camp->inicial = 0;
+                    $camp->save();
+                }
+            }
+
             DB::beginTransaction();
 
             $campanha = new Campanha();
@@ -95,6 +105,7 @@ class CampanhasController extends Controller
             $campanha->tempo = $request->tempo;
             $campanha->email = $request->email;
             $campanha->descricao = $request->descricao;
+            $campanha->inicial = $request->inicial;
             $campanha->situacao = $request->situacao;
             $campanha->save();
 
@@ -164,9 +175,20 @@ class CampanhasController extends Controller
             'email' => 'required',
             'descricao' => 'required',
             'situacao' => 'required',
+            'inicial' => 'required',
         ]);
 
+       // dd($request->all());
+
         try {
+
+            if ($request->inicial==1){
+                $camp = Campanha::where('inicial', 1)->first();
+                if ($camp){
+                    $camp->inicial = 0;
+                    $camp->save();
+                }
+            }
 
             $campanha = Campanha::where('id', $request->id)->first();
 
@@ -190,10 +212,14 @@ class CampanhasController extends Controller
             $campanha->tempo = $request->tempo;
             $campanha->email = $request->email;
             $campanha->descricao = $request->descricao;
+            $campanha->inicial = $request->inicial;
             $campanha->situacao = $request->situacao;
             $campanha->save();
 
+
             DB::commit();
+
+            //dd($campanha);
 
             return redirect()
                 ->route('admin.campanhas.edit', ['id'=>$campanha->id])

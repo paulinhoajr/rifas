@@ -31,6 +31,7 @@
                     <th>Categoria</th>
                     <th>Sorteio</th>
                     <th>Preço</th>
+                    <th>Inicial</th>
                     <th>Situação</th>
                     <th></th>
                 </tr>
@@ -44,6 +45,13 @@
                     <td>{{ $item->categoria->nome }}</td>
                     <td>{{ $item->sorteio->nome }}</td>
                     <td>{{ $item->preco }}</td>
+                    <td>
+                        @if($item->inicial==0)
+                            <button disabled class="btn btn-outline-danger btn-sm">Não</button>
+                        @else
+                            <button disabled class="btn btn-outline-success btn-sm">Sim</button>
+                        @endif
+                    </td>
                     <td>
                         @if($item->situacao==0)
                             <button disabled class="btn btn-outline-danger btn-sm">Inativo</button>

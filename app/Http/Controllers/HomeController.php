@@ -18,6 +18,17 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $campanha = Campanha::where('inicial', 1)
+            ->where('situacao', 1)
+            ->first();
+
+        if ($campanha){
+            return redirect()->route('site.campanha', [
+                'id' => $campanha->id,
+                'nome' => $campanha->nome,
+            ]);
+        }
+
         $campanhas = Campanha::where('situacao', 1)
             ->take(8)
             ->orderByDesc('id')

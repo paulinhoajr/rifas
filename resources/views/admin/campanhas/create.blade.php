@@ -120,6 +120,14 @@
                     <textarea type="text" class="form-control" id="descricao" name="descricao" rows="6" required>{{ old('descricao') }}</textarea>
                 </div>
 
+                <div class="col-sm-12">
+                    <label for="inicial" class="form-label">Página inicial</label>
+                    <select class="form-select" id="inicial" name="inicial">
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
+                    </select>
+                </div>
+
             </div>
 
             <hr class="my-4">

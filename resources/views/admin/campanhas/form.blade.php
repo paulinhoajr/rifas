@@ -42,7 +42,7 @@
 </div>
 <div class="form-group{{ $errors->has('descricao') ? 'has-error' : ''}}">
     <label for="descricao" class="control-label">{{ 'Descricao' }}</label>
-    <textarea class="form-control" rows="5" name="descricao" type="textarea" id="descricao" >@if($formMode == 'edit'){{ $campanha->descricao }}@else{{old('descricao')}}@endif</textarea>
+    <textarea class="form-control" rows="5" name="descricao" type="textarea" id="descricao" >@if($formMode == 'edit'){!! $campanha->descricao !!}@else {!! old('descricao') !!} @endif</textarea>
 
     {!! $errors->first('descricao', '<p class="help-block">:message</p>') !!}
 </div>
@@ -87,6 +87,14 @@
     <input class="form-control" name="status" type="number" id="status" value="@if($formMode == 'edit'){{ $campanha->status }}@else{{old('status')}}@endif" required>
 
     {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group{{ $errors->has('status') ? 'has-error' : ''}}">
+    <label for="inicial" class="control-label">Página inicial</label>
+    <select class="form-select" id="inicial" name="inicial">
+        <option value="1">Ativo</option>
+        <option value="0">Inativo</option>
+    </select>
 </div>
 
 
