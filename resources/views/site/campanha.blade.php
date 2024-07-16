@@ -53,7 +53,7 @@
 
                 <h3 class="mt-4">- Preço R$ {{ dollar_to_real($campanha->preco) }}</h3>
 
-                <h5 class="mt-2">- Reserva limite em dias <strong>({{ $campanha->tempo }})</strong></h5>
+            {{--    <h5 class="mt-2">- Reserva limite em dias <strong>({{ $campanha->tempo }})</strong></h5>--}}
 
                 @if($campanha->promocao)
                     <h5 class="mt-2">- Promoção</h5>
