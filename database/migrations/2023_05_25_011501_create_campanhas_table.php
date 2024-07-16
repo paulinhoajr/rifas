@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('tempo')->nullable()->comment('Tempo para pagamento');
             $table->string('email')->nullable();
             $table->integer('top')->default(1)->comment('0-nao 1-Mostrar top 3 ranking');
+            $table->integer('inicial')->default(0);
             $table->integer('situacao')->default(0);
             $table->timestamps();
             $table->softDeletes();
