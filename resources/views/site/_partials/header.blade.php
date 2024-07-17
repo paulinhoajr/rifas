@@ -35,7 +35,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="https://www.instagram.com/oficialrifatri" class="nav-link" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.instagram.com/rifatri_oficial" class="nav-link" target="_blank"><i class="fa-brands fa-instagram"></i></a>
         </li>
 
     </ul>
