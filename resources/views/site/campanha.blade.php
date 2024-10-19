@@ -51,14 +51,14 @@
                     - Máximo de números: <strong>{{ $campanha->maxima }}</strong>
                 </small>--}}
 
-                <h3 class="mt-4">- Preço R$ {{ dollar_to_real($campanha->preco) }}</h3>
+                <h3 class="mt-4">- Valor R$ {{ dollar_to_real($campanha->preco) }}</h3>
 
             {{--    <h5 class="mt-2">- Reserva limite em dias <strong>({{ $campanha->tempo }})</strong></h5>--}}
 
                 @if($campanha->promocao)
                     <h5 class="mt-2">- Promoção</h5>
-                    <small>* Comprando um mínimo de {{ $campanha->promocao->quantidade }} números,
-                        você pagará apenas R${{ dollar_to_real($campanha->promocao->valor) }}</small>
+                    <small>* Adquirindo ao menos {{ $campanha->promocao->quantidade }} números,
+                        o valor é R${{ dollar_to_real($campanha->promocao->valor) }} cada</small>
                 @endif
 
                 <h5 class="mt-2">- Sorteio: {{ $campanha->sorteio->nome }}</h5>
