@@ -76,20 +76,21 @@ class UsuarioController extends Controller
             $usuario->cpf = only_numbers($request->cpf);
             $usuario->phone = only_numbers($request->phone);
             $usuario->email = $request->email;
+            $usuario->email_verified_at = now();
             $usuario->password = Hash::make($request->password);
             $usuario->role = "ROLE_USUARIO";
             $usuario->save();
 
             //envia email
             //$usuario->sendEmailVerificationNotification();
-            event(new Registered($usuario));
+            //event(new Registered($usuario));
 
             DB::commit();
 
             Auth::loginUsingId($usuario->id);
 
             return redirect()->route('site.index')
-                ->with('message', "Conta criada com sucesso, consulte seu email para ativar sua conta.");
+                ->with('message', "Conta criada com sucesso.");
 
         }catch (\Exception $e){
             DB::rollBack();
