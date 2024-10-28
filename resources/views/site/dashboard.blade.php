@@ -70,11 +70,12 @@
                                 @endif
 
                                 <h5 class="mt-2">- Sorteio: {{ $campanha->sorteio->nome }}</h5>
-                                <strong class="mt-1">- Data: {{ dateTimeUsParaDateTimeBr($campanha->data) }}</strong>
+                                <strong class="mt-1">- Data: {{ dateTimeUsParaBr($campanha->data) }}</strong>
 
                                 <h5 class="mt-2">- Descrição</h5>
 
                                 {!! nl2br(e($campanha->descricao)) !!}
+
 
                             </div>
                         </div>
