@@ -174,6 +174,8 @@
 
                     //console.log(id);
 
+                    taLogado();
+
                     $("#"+id).removeClass( "btn-outline-info" );
                     $("#"+id).addClass( "selecionado" );
                     $("#"+id).addClass( "btn-primary" );
@@ -212,6 +214,14 @@
         /*jQuery('#tempo').keyup(function () {
             this.value = this.value.replace(/(?!^-)[^0-9]/g, "");
         });*/
+
+    function taLogado()
+    {
+        @if(!Auth::check())
+            window.location.href = '/login';
+        @endif
+
+    }
 
     </script>
 

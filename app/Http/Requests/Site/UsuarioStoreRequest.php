@@ -29,7 +29,7 @@ class UsuarioStoreRequest extends FormRequest
             'nome' => ['required', 'string', 'max:255'],
             'cpf' => ['required', 'cpf', 'unique:'.Usuario::class],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.Usuario::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            //'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ];
     }
 

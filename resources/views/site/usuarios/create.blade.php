@@ -33,10 +33,10 @@
                     <input name="password" type="password" class="form-control" id="senha" placeholder="Senha" required autocomplete="new-password">
                     <label for="senha">Senha</label>
                 </div>
-                <div class="form-floating mt-3">
+                {{--<div class="form-floating mt-3">
                     <input name="password_confirmation" type="password" class="form-control" id="password_confirmation" placeholder="Repita Senha">
                     <label for="password_confirmation">Repita Senha</label>
-                </div>
+                </div>--}}
 
                 <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Cadastrar</button>
             </form>
