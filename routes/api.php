@@ -18,11 +18,3 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/check-auth', function () {
-    return response()->json(['authenticated' => Auth::check()]);
-});
-
-/*Route::middleware('auth:sanctum')->get('/check-auth', function () {
-    return response()->json(['authenticated' => Auth::check()]);
-});*/
