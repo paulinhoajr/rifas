@@ -227,7 +227,7 @@ class HomeController extends Controller
 
             foreach ($bilhetes as $bilhete) {
 
-                $pix = Pix::where('situacao', 0)
+                $pix = Pix::where('situacao', 0) //novo
                     ->whereJsonContains('lista', $bilhete->id)
                     ->where('campanha_id', $bilhete->campanha_id)
                     ->first();
@@ -239,6 +239,7 @@ class HomeController extends Controller
                 $date1 = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::parse($bilhete->expira));
                 $date2 = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now());
 
+                //se a data de hoje for maior que o vencimento
                 $result = $date2->gt($date1);
 
                 if ($result){
@@ -250,8 +251,11 @@ class HomeController extends Controller
                     $bilhete->situacao = 0;
                     $bilhete->save();
 
-                    $pix->situacao = 2;
-                    $pix->save();
+                    //acho que aqui verifico se tem pix em aberto e entao cancela
+                    if ($pix) {
+                        $pix->situacao = 2;
+                        $pix->save();
+                    }
                 }
             }
 
