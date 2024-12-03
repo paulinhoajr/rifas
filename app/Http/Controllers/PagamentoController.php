@@ -39,6 +39,7 @@ class PagamentoController extends Controller
         $id = $request->get('id');
 
         $pix = Pix::where('campanha_id', $id)
+            ->where('usuario_id', Auth::user()->id)
             ->where('situacao', 0)
             ->first();
 
