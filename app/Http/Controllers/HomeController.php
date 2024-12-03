@@ -242,6 +242,7 @@ class HomeController extends Controller
                 //se a data de hoje for maior que o vencimento
                 $result = $date2->gt($date1);
 
+
                 if ($result){
 
                     //rodar itens e cancelar numeros
